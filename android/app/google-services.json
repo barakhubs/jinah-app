@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406672295793",
+    "project_id": "jinah-fab45",
+    "storage_bucket": "jinah-fab45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406672295793:android:239aadf33c7d87ede918d0",
+        "android_client_info": {
+          "package_name": "com.jinahonestop.jinah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbmRumps6TaX3x2gPP8Gz6sFYLnigtdeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
