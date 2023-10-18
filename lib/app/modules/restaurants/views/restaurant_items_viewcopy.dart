@@ -501,7 +501,7 @@ Widget menuVegNonVegSection(context, box, bool fromRestaurantList, int restauran
                   !restaurantController.isRestaurantItemEmpty
                       ? Column(
                           children: [
-                            if (box.read('viewValue') == 1)
+                            // if (box.read('viewValue') == 1)
                               menuItemSectionGrid(),
                           ],
                         )

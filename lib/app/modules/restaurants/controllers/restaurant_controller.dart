@@ -29,10 +29,10 @@ class RestaurantController extends GetxController {
 
   static Server server = Server();
   static RestaurantItemModel restaurantItemModel = RestaurantItemModel();
+  static BranchModel branchModel = BranchModel();
   @override
   void onInit() {
     getRestaurantList();
-
     super.onInit();
   }
 
@@ -43,6 +43,7 @@ class RestaurantController extends GetxController {
 
   getRestaurantList() async {
     restaurantLoader = true;
+    restaurantDataList.clear();
     update();
     var restaurantData = await RestaurantRepo.getRestaurants();
     if (restaurantData != null) {
@@ -54,6 +55,28 @@ class RestaurantController extends GetxController {
       update();
     }
   }
+
+  // getRestaurantName(id) async {
+  //   restaurantLoader = true;
+  //   restaurantDataList.clear();
+  //   String url = 'https://admin.jinahonestop.com/api/frontend/item-restaurant';
+
+  //   await server.getRequestWithoutToken(endPoint: url + id.toString()).then((response) {
+  //     if (response != null && response.statusCode == 200) {
+  //       final jsonResponse = json.decode(response.body);
+  //       branchModel = BranchModel.fromJson(jsonResponse);
+  //       restaurantDataList = branchModel.data!;
+
+  //       restaurantLoader = false;
+  //       update();
+
+  //       return restaurantDataList;
+  //     } else {
+  //       restaurantLoader = false;
+  //       update();
+  //     }
+  //   });
+  // }
 
   getItemDataList() async {
     itemLoader = true;
@@ -72,12 +95,12 @@ class RestaurantController extends GetxController {
   getRestaurantItemDataList(int id) async {
     restaurantItemLoader = true;
     restaurantItemsDataList.clear();
-    print('from controller ' + id.toString());
+    print('from controller ---->' + id.toString());
     String url =
         'https://admin.jinahonestop.com/api/frontend/item-restaurant/show/';
 
     await server
-        .getRequestWithoutToken(endPoint: url + 1.toString())
+        .getRequestWithoutToken(endPoint: url + id.toString())
         .then((response) {
       if (response != null && response.statusCode == 200) {
         restaurantItemLoader = false;

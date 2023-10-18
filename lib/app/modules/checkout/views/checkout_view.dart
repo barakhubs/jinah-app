@@ -1340,7 +1340,9 @@ class _CheckoutViewState extends State<CheckoutView> {
   void callback(bool isSuccess, OrderDetailsData orderDetailsData) {
     if (isSuccess) {
       Get.offAll(() => const DashboardView());
-      confirmAlert(context, orderDetailsData).show();
+      // confirmAlert(context, orderDetailsData).show();
+      Get.find<OrderController>()
+                          .getOrderDetails(orderDetailsData.id!);
     }
   }
 

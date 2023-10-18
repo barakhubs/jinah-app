@@ -23,11 +23,13 @@ import '../../../../widget/no_items_available.dart';
 class RestaurantItemView extends StatefulWidget {
   bool? fromRestaurantList;
   int? restaurantId;
+  String? restaurantName;
 
   RestaurantItemView({
     Key? key,
     this.fromRestaurantList,
     this.restaurantId,
+    this.restaurantName,
   }) : super(key: key);
 
   @override
@@ -47,10 +49,9 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
       box.write('viewValue', 0);
     }
     if (restaurantController.restaurantDataList.isNotEmpty) {
-      restaurantController.getRestaurantItemDataList(
-          restaurantController.restaurantDataList[widget.restaurantId!].id!);
+      restaurantController.getRestaurantItemDataList(widget.restaurantId!);
       restaurantController.fromRestaurantList = true;
-      print('from view ' + restaurantController.restaurantDataList[widget.restaurantId!].id!.toString());
+      print('from view ----->' + widget.restaurantId!.toString());
     }
     super.initState();
   }
@@ -146,36 +147,36 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
                 elevation: 0,
                 backgroundColor: Colors.white,
               ),
-              body: Stack(
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        restaurantController.restaurantDataList.isNotEmpty
-                            ? menuVegNonVegSection(context, box,
-                                widget.fromRestaurantList!, widget.restaurantId!)
-                            : Column(
-                                children: [menuItemSectionGridShimmer()],
-                              )
-                      ],
-                    ),
+                  SizedBox(
+                    height: 20.h,
                   ),
-                  widget.fromRestaurantList!
-                      ? const BottomCartWidget()
-                      : const SizedBox()
+                  restaurantController.restaurantDataList.isNotEmpty
+                      ? menuVegNonVegSection(context, box,
+                          widget.fromRestaurantList!, widget.restaurantId!, widget.restaurantName!)
+                      : Column(
+                          children: [menuItemSectionGridShimmer()],
+                        )
                 ],
               ),
+            ),
+            widget.fromRestaurantList!
+                ? const BottomCartWidget()
+                : const SizedBox()
+          ],
+        ),
       ),
     );
   }
 }
 
 Widget menuVegNonVegSection(
-    context, box, bool fromRestaurantList, int restaurantId) {
+    context, box, bool fromRestaurantList, int restaurantId, String restaurantName) {
   return GetBuilder<RestaurantController>(
     builder: (restaurantController) => Expanded(
       child: RefreshIndicator(
@@ -198,8 +199,7 @@ Widget menuVegNonVegSection(
                         children: [
                           Expanded(
                             child: Text(
-                              restaurantController
-                                  .restaurantDataList[restaurantId].name!,
+                              restaurantName,
                               style: fontBoldWithColor,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,

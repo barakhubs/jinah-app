@@ -17,14 +17,14 @@ Widget popularBranchSection() {
           child: Row(
             children: [
               SizedBox(
-                height: 24.h,
+                height: 24.h, 
                 child: Text(
                   "Most Popular Restaurants",
                   style: fontBold,
                 ),
               ),
             ],
-          ),
+          ), 
         ),
         horizontalScrollCard(homeController.popularBranchDataList)
       ],

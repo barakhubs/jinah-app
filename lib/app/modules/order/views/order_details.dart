@@ -902,8 +902,8 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                 if (orderController
                                             .orderDetailsData.paymentStatus !=
                                         5 &&
-                                    orderController.orderDetailsData.status !=
-                                        16 &&
+                                    (orderController.orderDetailsData.status !=
+                                        16 && orderController.orderDetailsData.status != 1) &&
                                     connect.configData.siteOnlinePaymentGateway
                                             .toString() ==
                                         '5')

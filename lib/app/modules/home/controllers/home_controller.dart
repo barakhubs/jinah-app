@@ -34,6 +34,11 @@ class HomeController extends GetxController {
   int? selectedbranchId;
 
   bool loader = false;
+  int currentIndex = 0;
+  int selectedCategoryIndex = 0;
+  int vegNonVegActive = 0;
+  int vegNonVegActiveList = 0;
+  bool fromRestaurantList = true;
   bool menuLoader = false;
   bool featuredLoader = false;
   bool offerLoader = false;
@@ -42,6 +47,7 @@ class HomeController extends GetxController {
   bool latestBranchLoader = false;
   bool activeOrderLoader = false;
   int selectedBranchIndex = 0;
+  bool restaurantItemLoader = false;
 
   @override
   void onInit() {
@@ -118,11 +124,13 @@ class HomeController extends GetxController {
 
   getPopularItemDataList() async {
     popularLoader = true;
+    restaurantItemLoader = true;
     update();
     var popularItemData = await PopularItemRepo.getPopularItem();
     if (popularItemData != null) {
       popularItemDataList = popularItemData.data ?? [];
       popularLoader = false;
+      restaurantItemLoader = false;
       update();
     } else {
       update();
@@ -131,12 +139,14 @@ class HomeController extends GetxController {
 
   getFeaturedItemDataList() async {
     featuredLoader = true;
+    restaurantItemLoader = true;
     update();
     var featuredItemData = await FeaturedItemRepo.getFeaturedItem();
     if (featuredItemData != null) {
       featuredItemDataList = featuredItemData.data ?? [];
       update();
       featuredLoader = false;
+      restaurantItemLoader = false;
       update();
     } else {
       update();
@@ -145,28 +155,34 @@ class HomeController extends GetxController {
 
   getLatestBranchDataList() async {
     latestBranchLoader = true;
+    restaurantItemLoader = true;
     update();
     var latestBranchData = await LatestBranchRepo.getPopularBranches();
     if (latestBranchData != null) {
       latestBranchDataList = latestBranchData.data ?? [];
       update();
       latestBranchLoader = false;
+      restaurantItemLoader = false;
       update();
     } else {
       update();
+      restaurantItemLoader = false;
     }
   }
 
   getPopularBranchDataList() async {
     popularBranchLoader = true;
+    restaurantItemLoader = false;
     update();
     var popularBranchData = await PopularBranchRepo.getPopularBranches();
     if (popularBranchData != null) {
       popularBranchDataList = popularBranchData.data ?? [];
       update();
       popularBranchLoader = false;
+      restaurantItemLoader = false;
       update();
     } else {
+      restaurantItemLoader = false;
       update();
     }
   }

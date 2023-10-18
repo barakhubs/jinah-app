@@ -17,7 +17,7 @@ Widget horizontalScrollCard(branch) {
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: branch.length,
-      itemBuilder: (context, index) => _buildBranchCard(branch, index, context),
+      itemBuilder: (BuildContext context, int index) => _buildBranchCard(branch, index, context),
     ),
   );
 }
@@ -25,15 +25,13 @@ Widget horizontalScrollCard(branch) {
 Widget _buildBranchCard(branch, index, context) {
   return InkWell(
     onTap: () {
-      
-
       Get.to(() => RestaurantItemView(
             fromRestaurantList: true,
-            restaurantId: index,
+            restaurantId: branch[index].id!, 
+            restaurantName: branch[index].name!, 
           ));
       // print('branch ' + branch[index].id.toString());
-      print('index from click ' + index.toString());
-
+      print('id from click ----->' + branch[index].id!.toString());
     },
     child: Container(
       width: MediaQuery.of(context).size.width - 70.w, // Width of the card

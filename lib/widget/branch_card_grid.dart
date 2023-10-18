@@ -19,10 +19,11 @@ Widget branchCardGrid(branch, index, context) {
 
       Get.to(() => RestaurantItemView(
             fromRestaurantList: true,
-            restaurantId: index,
+            restaurantId: branch[index].id!, 
+            restaurantName: branch[index].name!,
           ));
-      print('branch' + branch);
-      print('index ' + index);
+      print('branch ---->' + branch[index].id!.toString());
+      print('index ----->' + index.toString());
     },
     child: Container(
       height: 150.h,
