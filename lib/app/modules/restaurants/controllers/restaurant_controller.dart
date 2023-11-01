@@ -92,36 +92,70 @@ class RestaurantController extends GetxController {
     }
   }
 
+  // getRestaurantItemDataList(int id) async {
+  //   restaurantItemLoader = true;
+  //   restaurantItemsDataList.clear();
+  //   print('from controller ---->' + id.toString());
+  //   String url =
+  //       'https://admin.jinahonestop.com/api/frontend/item-restaurant/show/';
+
+  //   await server
+  //       .getRequestWithoutToken(endPoint: url + id.toString())
+  //       .then((response) {
+  //     if (response != null && response.statusCode == 200) {
+  //       restaurantItemLoader = false;
+
+  //       final jsonResponse = json.decode(response.body);
+  //       restaurantItemModel = RestaurantItemModel.fromJson(jsonResponse);
+  //       restaurantItemsDataList = restaurantItemModel.data!.items!;
+  //       // Check if items list is empty
+  //       if (restaurantItemsDataList.isEmpty) {
+  //         isRestaurantItemEmpty = true;
+  //       } else {
+  //         isRestaurantItemEmpty = false;
+  //       }
+  //       update();
+
+  //       return restaurantItemsDataList;
+  //     } else {
+  //       restaurantItemLoader = false;
+  //       isRestaurantItemEmpty = true;
+  //       update();
+  //     }
+  //   });
+  // }
+
   getRestaurantItemDataList(int id) async {
-    restaurantItemLoader = true;
-    restaurantItemsDataList.clear();
-    print('from controller ---->' + id.toString());
-    String url =
-        'https://admin.jinahonestop.com/api/frontend/item-restaurant/show/';
+  restaurantItemLoader = true;
+  restaurantItemsDataList.clear();
+  print('from controller ---->' + id.toString());
+  String url =
+      'https://admin.jinahonestop.com/api/frontend/item-restaurant/show/';
 
-    await server
-        .getRequestWithoutToken(endPoint: url + id.toString())
-        .then((response) {
-      if (response != null && response.statusCode == 200) {
-        restaurantItemLoader = false;
+  await server
+      .getRequestWithoutToken(endPoint: url + id.toString())
+      .then((response) {
+    if (response != null && response.statusCode == 200) {
+      restaurantItemLoader = false;
 
-        final jsonResponse = json.decode(response.body);
-        restaurantItemModel = RestaurantItemModel.fromJson(jsonResponse);
-        restaurantItemsDataList = restaurantItemModel.data!.items!;
-        // Check if items list is empty
-        if (restaurantItemsDataList.isEmpty) {
-          isRestaurantItemEmpty = true;
-        } else {
-          isRestaurantItemEmpty = false;
-        }
-        update();
-
-        return restaurantItemsDataList;
-      } else {
-        restaurantItemLoader = false;
+      final jsonResponse = json.decode(response.body);
+      restaurantItemModel = RestaurantItemModel.fromJson(jsonResponse);
+      restaurantItemsDataList = restaurantItemModel.data!.items!;
+      print('restaurantItemsDataList: $restaurantItemsDataList'); // Add this line to check the value of the restaurantItemsDataList variable
+      // Check if items list is empty
+      if (restaurantItemsDataList.isEmpty) {
         isRestaurantItemEmpty = true;
-        update();
+      } else {
+        isRestaurantItemEmpty = false;
       }
-    });
-  }
+      update();
+
+      return restaurantItemsDataList;
+    } else {
+      restaurantItemLoader = false;
+      isRestaurantItemEmpty = true;
+      update();
+    }
+  });
+}
 }

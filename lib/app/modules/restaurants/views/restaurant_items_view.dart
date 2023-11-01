@@ -48,11 +48,14 @@ class _RestaurantItemViewState extends State<RestaurantItemView> {
     if (box.read('viewValue') == null) {
       box.write('viewValue', 0);
     }
-    if (restaurantController.restaurantDataList.isNotEmpty) {
-      restaurantController.getRestaurantItemDataList(widget.restaurantId!);
+    // if (restaurantController.restaurantDataList.isNotEmpty) {
+    //   restaurantController.getRestaurantItemDataList(widget.restaurantId!);
+    //   restaurantController.fromRestaurantList = true;
+    //   print('from view ----->' + widget.restaurantId!.toString());
+    // }
+    restaurantController.getRestaurantItemDataList(widget.restaurantId!);
       restaurantController.fromRestaurantList = true;
-      print('from view ----->' + widget.restaurantId!.toString());
-    }
+      
     super.initState();
   }
 
@@ -224,37 +227,71 @@ Widget menuVegNonVegSection(
   );
 }
 
+// Widget menuItemSectionGrid() {
+//   return GetBuilder<RestaurantController>(
+//     builder: (restaurantController) =>
+//         !restaurantController.restaurantItemLoader
+//             ? Padding(
+//                 padding: const EdgeInsets.symmetric(vertical: 16),
+//                 child: Column(
+//                   children: [
+//                     StaggeredGridView.countBuilder(
+//                       crossAxisSpacing: 10.0,
+//                       mainAxisSpacing: 10.0,
+//                       itemCount:
+//                           restaurantController.restaurantItemsDataList.length,
+//                       crossAxisCount: 2,
+//                       physics: const NeverScrollableScrollPhysics(),
+//                       shrinkWrap: true,
+//                       staggeredTileBuilder: (int index) =>
+//                           const StaggeredTile.fit(1),
+//                       itemBuilder: (BuildContext context, int index) {
+//                         return itemCardGrid(
+//                             restaurantController.restaurantItemsDataList,
+//                             index,
+//                             context);
+//                       },
+//                     ),
+//                     SizedBox(
+//                       height: 40.h,
+//                     )
+//                   ],
+//                 ),
+//               )
+//             : menuItemSectionGridShimmer(),
+//   );
+// }
+
 Widget menuItemSectionGrid() {
   return GetBuilder<RestaurantController>(
-    builder: (restaurantController) =>
-        !restaurantController.restaurantItemLoader
-            ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Column(
-                  children: [
-                    StaggeredGridView.countBuilder(
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 10.0,
-                      itemCount:
-                          restaurantController.restaurantItemsDataList.length,
-                      crossAxisCount: 2,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      staggeredTileBuilder: (int index) =>
-                          const StaggeredTile.fit(1),
-                      itemBuilder: (BuildContext context, int index) {
-                        return itemCardGrid(
-                            restaurantController.restaurantItemsDataList,
-                            index,
-                            context);
-                      },
-                    ),
-                    SizedBox(
-                      height: 40.h,
-                    )
-                  ],
-                ),
-              )
-            : menuItemSectionGridShimmer(),
+    builder: (restaurantController) {
+      print('restaurantItemsDataList: ${restaurantController.restaurantItemsDataList}'); // Add this line to check the value of the restaurantItemsDataList variable
+      return !restaurantController.restaurantItemLoader
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                children: [
+                  StaggeredGridView.countBuilder(
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
+                    itemCount: restaurantController.restaurantItemsDataList.length,
+                    crossAxisCount: 2,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
+                    itemBuilder: (BuildContext context, int index) {
+                      print('itemCardGrid called'); // Add this line to check if the itemCardGrid function is being called
+                      return itemCardGrid(
+                          restaurantController.restaurantItemsDataList, index, context);
+                    },
+                  ),
+                  SizedBox(
+                    height: 40.h,
+                  )
+                ],
+              ),
+            )
+          : menuItemSectionGridShimmer();
+    },
   );
 }

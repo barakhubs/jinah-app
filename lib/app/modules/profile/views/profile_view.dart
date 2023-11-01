@@ -343,8 +343,8 @@ class _ProfileViewState extends State<ProfileView> {
                         if (box.read('isLogedIn') == true)
                           profileItem(ChangePasswordView(), Images.change_pass,
                               "CHANGE_PASSWORD".tr),
-                        profileItem(const ChangeLanguageView(),
-                            Images.change_language, "CHANGE_LANGUAGE".tr),
+                        // profileItem(const ChangeLanguageView(),
+                        //     Images.change_language, "CHANGE_LANGUAGE".tr),
                         //web pages
                         GetBuilder<SplashController>(
                           builder: (splashController) => SizedBox(
