@@ -1,4 +1,4 @@
-import 'package:foodking/app/data/repository/latest_branch_repo%20.dart';
+import 'package:jinahfoods/app/data/repository/latest_branch_repo%20.dart';
 
 import 'dart:convert';
 import 'package:get/get.dart';

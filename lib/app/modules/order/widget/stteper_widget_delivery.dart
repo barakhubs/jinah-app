@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:async';
+
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -15,21 +17,34 @@ class StepperWidgetDelivery extends StatefulWidget {
 
 class _Stepper extends State<StepperWidgetDelivery> {
   int activeStep = 0;
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
+    _timer = Timer.periodic(Duration(seconds: 10), (timer) => refreshView());
+  }
 
-    if (Get.find<OrderController>().orderDetailsData.status == 1) {
-      activeStep = 0;
-    } else if (Get.find<OrderController>().orderDetailsData.status == 4) {
-      activeStep = 1;
-    } else if (Get.find<OrderController>().orderDetailsData.status == 7) {
-      activeStep = 2;
-    } else if (Get.find<OrderController>().orderDetailsData.status == 10) {
-      activeStep = 3;
-    } else if (Get.find<OrderController>().orderDetailsData.status == 13) {
-      activeStep = 4;
-    }
+  void refreshView() {
+    setState(() {
+      if (Get.find<OrderController>().orderDetailsData.status == 1) {
+        activeStep = 0;
+      } else if (Get.find<OrderController>().orderDetailsData.status == 4) {
+        activeStep = 1;
+      } else if (Get.find<OrderController>().orderDetailsData.status == 7) {
+        activeStep = 2;
+      } else if (Get.find<OrderController>().orderDetailsData.status == 10) {
+        activeStep = 3;
+      } else if (Get.find<OrderController>().orderDetailsData.status == 13) {
+        activeStep = 4;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -147,8 +162,12 @@ class _Stepper extends State<StepperWidgetDelivery> {
                 ),
               ),
             ],
-            onStepReached: (index) =>
-                setState(() => orderController.orderDetailsData.status = index),
+            onStepReached: (index) {
+              setState(() {
+                orderController.orderDetailsData.status = index;
+                refreshView();
+              });
+            },
           ),
         ],
       ),

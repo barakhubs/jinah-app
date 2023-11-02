@@ -587,7 +587,7 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                                                       .cover,
                                                                 ),
                                                               ),
-                                                            ),
+                                                            ), 
                                                             placeholder: (context,
                                                                     url) =>
                                                                 Shimmer

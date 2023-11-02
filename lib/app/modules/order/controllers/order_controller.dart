@@ -1,5 +1,6 @@
 // ignore_for_file: body_might_complete_normally_nullable
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -24,6 +25,7 @@ class OrderController extends GetxController {
   bool orderDetailsLoader = false;
   int? orderId;
 
+Timer? _timer;
   @override
   void onInit() {
     final box = GetStorage();
@@ -31,6 +33,13 @@ class OrderController extends GetxController {
       getMyOrderList();
     }
     super.onInit();
+    _timer = Timer.periodic(Duration(seconds: 10), (timer) => getOrderDetails(orderId!));
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
   }
 
   getMyOrderList() async {

@@ -3,8 +3,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foodking/app/modules/restaurants/views/restaurant_view.dart';
-import 'package:foodking/app/modules/restaurants/views/restaurant_items_view.dart';
+import 'package:jinahfoods/app/modules/restaurants/views/restaurant_view.dart';
+import 'package:jinahfoods/app/modules/restaurants/views/restaurant_items_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../../helper/device_token.dart';

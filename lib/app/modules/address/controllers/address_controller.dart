@@ -44,7 +44,9 @@ class AddressController extends GetxController {
       altitude: 1,
       heading: 1,
       speed: 1,
-      speedAccuracy: 1);
+      speedAccuracy: 1,
+      altitudeAccuracy: 1, // Add this line
+      headingAccuracy: 1); // Add this line);
 
   Position pickPosition = Position(
       longitude: 0.0,
@@ -54,7 +56,10 @@ class AddressController extends GetxController {
       altitude: 1,
       heading: 1,
       speed: 1,
-      speedAccuracy: 1);
+      speedAccuracy: 1,
+      altitudeAccuracy: 1,
+      headingAccuracy: 1);
+
   bool isLoading = true;
   List<Placemark>? placemarks;
   LatLng? initialPosition;
@@ -88,6 +93,8 @@ class AddressController extends GetxController {
       heading: 1,
       speed: 1,
       speedAccuracy: 1,
+      altitudeAccuracy: 1, // Add this line
+      headingAccuracy: 1, // Add this line
     );
     super.onInit();
   }
@@ -118,6 +125,8 @@ class AddressController extends GetxController {
       heading: 1,
       speed: 1,
       speedAccuracy: 1,
+      altitudeAccuracy: 1, // Add this line
+      headingAccuracy: 1, // Add this line
     );
     getPlaceName();
     update();
@@ -139,6 +148,8 @@ class AddressController extends GetxController {
       heading: 1,
       speed: 1,
       speedAccuracy: 1,
+      altitudeAccuracy: 1, // Add this line
+      headingAccuracy: 1, // Add this line
     );
     isLoading = false;
     update();
@@ -218,6 +229,8 @@ class AddressController extends GetxController {
       heading: 1,
       speed: 1,
       speedAccuracy: 1,
+      altitudeAccuracy: 1, // Add this line
+      headingAccuracy: 1, // Add this line
     );
 
     update();
@@ -260,6 +273,8 @@ class AddressController extends GetxController {
       altitude: 1,
       speedAccuracy: 1,
       speed: 1,
+      altitudeAccuracy: 1, // Add this line
+      headingAccuracy: 1, // Add this line
     );
     update();
     getAddressFromGeocodeData(
