@@ -38,8 +38,8 @@ Widget popularItemSection() {
             StaggeredGridView.countBuilder(
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
-                itemCount: homeController.featuredItemDataList.length > 4
-                    ? 4
+                itemCount: homeController.featuredItemDataList.length > 8
+                    ? 8
                     : homeController.popularItemDataList.length,
                 crossAxisCount: 2,
                 physics: const NeverScrollableScrollPhysics(),

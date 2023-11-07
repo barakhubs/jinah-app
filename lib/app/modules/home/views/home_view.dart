@@ -61,32 +61,34 @@ class _HomeViewState extends State<HomeView> {
 
 // Method to fetch banner data
   Future<void> fetchBannerData() async {
-  try {
-    final response = await http.get(
-      Uri.parse('https://admin.jinahonestop.com/api/frontend/slider?paginate=0&order_column=id&order_type=desc&status=5'),
-      headers: {
-        'X-Api-Key': '00TdJKnn5Ck8kWHNd/BuZkVvZD8JPsNSSeMVdSveZ+0=',
-        // Add any other headers here
-      },
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://admin.jinahonestop.com/api/frontend/slider?paginate=0&order_column=id&order_type=desc&status=5'),
+        headers: {
+          'X-Api-Key': '00TdJKnn5Ck8kWHNd/BuZkVvZD8JPsNSSeMVdSveZ+0=',
+          // Add any other headers here
+        },
+      );
 
-    if (response.statusCode == 200) {
-      final List<dynamic> fetchedData = jsonDecode(response.body)['data'];
-      setState(() {
-        imgList.clear();
-        imgList.addAll(
-          fetchedData.map((item) =>
-            'https://admin.jinahonestop.com' + item['image']
-          ).toList().cast<String>(),
-        );
-      });
-    } else {
-      print('Failed to load banners, status code: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final List<dynamic> fetchedData = jsonDecode(response.body)['data'];
+        setState(() {
+          imgList.clear();
+          imgList.addAll(
+            fetchedData
+                .map((item) => 'https://admin.jinahonestop.com' + item['image'])
+                .toList()
+                .cast<String>(),
+          );
+        });
+      } else {
+        print('Failed to load banners, status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
     }
-  } catch (e) {
-    print('Exception occurred: $e');
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +115,8 @@ class _HomeViewState extends State<HomeView> {
                   builder: (homeController) => Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 16.h, right: 16.h, bottom: 5.h),
-
+                        padding: EdgeInsets.only(
+                            left: 16.h, right: 16.h, bottom: 5.h),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -221,17 +223,22 @@ class _HomeViewState extends State<HomeView> {
                                                   // Handle page change if needed
                                                 },
                                               ),
-                                              items: imgList.map(
-                (item) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                      image: NetworkImage(item),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ).toList(),
+                                              items: imgList
+                                                  .map(
+                                                    (item) => Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              item),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList(),
                                             ),
                                           ),
 
@@ -304,5 +311,3 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-
-

@@ -144,6 +144,7 @@ class HomeController extends GetxController {
     var featuredItemData = await FeaturedItemRepo.getFeaturedItem();
     if (featuredItemData != null) {
       featuredItemDataList = featuredItemData.data ?? [];
+      print('Length is: '+ featuredItemDataList.length.toString());
       update();
       featuredLoader = false;
       restaurantItemLoader = false;
