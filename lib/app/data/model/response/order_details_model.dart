@@ -172,6 +172,7 @@ class Branch {
     this.zipCode,
     this.address,
     this.status,
+    this.timeToPrepare,
   });
 
   int? id;
@@ -185,6 +186,7 @@ class Branch {
   String? zipCode;
   String? address;
   int? status;
+  String? timeToPrepare;
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
         id: json["id"],
@@ -198,6 +200,7 @@ class Branch {
         zipCode: json["zip_code"],
         address: json["address"],
         status: json["status"],
+        timeToPrepare: json["time_to_prepare"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -212,6 +215,7 @@ class Branch {
         "zip_code": zipCode,
         "address": address,
         "status": status,
+        "time_to_prepare": timeToPrepare,
       };
 }
 

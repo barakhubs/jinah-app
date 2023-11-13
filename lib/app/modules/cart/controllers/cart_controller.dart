@@ -3,7 +3,9 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:jinahfoods/util/constant.dart';
 import '../../../../util/api-list.dart';
 import '../../../../widget/custom_snackbar.dart';
 import '../../../data/api/server.dart';
@@ -60,6 +62,17 @@ class CartController extends GetxController {
     super.onInit();
   }
 
+  void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: AppColor.error,
+        textColor: Colors.white,
+        timeInSecForIosWeb: 1,
+        fontSize: 16.0);
+  }
+
   //for main item
   addQuantity() {
     itemQuantity++;
@@ -92,27 +105,37 @@ class CartController extends GetxController {
       // If the product already exists, increase the quantity and update the total price
       cart[existingItemIndex].quantity =
           cart[existingItemIndex].quantity! + itemQuantity;
+
+      return true;
     } else {
       // If the product does not exist, add a new item to the cart
-      cart.add(
-        Cart(
-          itemId: mainItem.id,
-          itemName: mainItem.name,
-          itemPrice: mainItem.offer!.isEmpty
-              ? mainItem.convertPrice
-              : mainItem.offer![0].convertPrice,
-          branchId: homeController.selectedbranchId,
-          itemImage: mainItem.cover,
-          quantity: itemQuantity,
-          discount: couponDiscount,
-          instruction: instruction,
-          totalPrice: totalPrice,
-          itemVariationTotal: variationSum,
-          itemExtraTotal: extraSum,
-          itemExtras: extra,
-          itemVariations: variationList,
-        ),
-      );
+      if (cart.isEmpty || mainItem.branch_id == cart[0].branchId) {
+        cart.add(
+          Cart(
+            itemId: mainItem.id,
+            itemName: mainItem.name,
+            itemPrice: mainItem.offer!.isEmpty
+                ? mainItem.convertPrice
+                : mainItem.offer![0].convertPrice,
+            branchId: mainItem.branch_id,
+            itemImage: mainItem.cover,
+            quantity: itemQuantity,
+            discount: couponDiscount,
+            instruction: instruction,
+            totalPrice: totalPrice,
+            itemVariationTotal: variationSum,
+            itemExtraTotal: extraSum,
+            itemExtras: extra,
+            itemVariations: variationList,
+          ),
+        );
+
+        return true;
+      } else {
+        // Display toast message if the branch is different
+        showToast("Items with different branches are not allowed in the cart");
+        return false; // Exit the method if different branch is detected
+      }
     }
 
     selectedExtraIndex.clear();

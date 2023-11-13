@@ -1219,6 +1219,9 @@ class _CheckoutViewState extends State<CheckoutView> {
                                         cartController.orderTypeIndex == 0) {
                                       customTast("PLEASE_CHOOSE_AN_ADDRESS".tr,
                                           AppColor.error);
+                                    }else if (cartController.kilometer >= 9.5) {
+                                      customTast("We only deliver within the city",
+                                          AppColor.error);
                                     } else {
                                       placeOrderController.placeOrderPost(
                                           PlaceOrderBody(
@@ -1341,8 +1344,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     if (isSuccess) {
       // Get.offAll(() => const DashboardView());
       // confirmAlert(context, orderDetailsData).show();
-      Get.find<OrderController>()
-                          .getOrderDetails(orderDetailsData.id!);
+      Get.find<OrderController>().getOrderDetails(orderDetailsData.id!);
     }
   }
 
@@ -1634,8 +1636,10 @@ Widget cartSummarySection(context) {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8.r)),
                                     child: CachedNetworkImage(
-                                      imageUrl: "https://admin.jinahonestop.com"+
-                                          cartController.cart[index].itemImage!,
+                                      imageUrl:
+                                          "https://admin.jinahonestop.com" +
+                                              cartController
+                                                  .cart[index].itemImage!,
                                       imageBuilder: (context, imageProvider) =>
                                           Container(
                                         decoration: BoxDecoration(
@@ -1747,12 +1751,13 @@ Widget cartSummarySection(context) {
                                         children: [
                                           Text(
                                             Get.find<SplashController>()
-                                                .configData
-                                                .siteDefaultCurrencySymbol!+" ",
+                                                    .configData
+                                                    .siteDefaultCurrencySymbol! +
+                                                " ",
                                             style: fontMediumPro,
                                           ),
                                           Text(
-                                                formatter.format(cartController
+                                            formatter.format(cartController
                                                 .cart[index].totalPrice!),
                                             style: fontMediumPro,
                                           ),
@@ -1761,14 +1766,15 @@ Widget cartSummarySection(context) {
                                     : Row(
                                         children: [
                                           Text(
-                                                formatter.format(cartController
+                                            formatter.format(cartController
                                                 .cart[index].totalPrice!),
                                             style: fontMediumPro,
                                           ),
                                           Text(
                                             Get.find<SplashController>()
-                                                .configData
-                                                .siteDefaultCurrencySymbol!+" ",
+                                                    .configData
+                                                    .siteDefaultCurrencySymbol! +
+                                                " ",
                                             style: fontMediumPro,
                                           ),
                                         ],
@@ -1817,21 +1823,22 @@ Widget cartSummarySection(context) {
                                       .configData.siteCurrencyPosition ==
                                   5)
                                 Text(
-                                  splashController
-                                      .configData.siteDefaultCurrencySymbol!+" ",
+                                  splashController.configData
+                                          .siteDefaultCurrencySymbol! +
+                                      " ",
                                   style: fontRegularLite,
                                 ),
                               Text(
-                                formatter.format(
-                                cartController.totalCartValue),
+                                formatter.format(cartController.totalCartValue),
                                 style: fontRegularLite,
                               ),
                               if (splashController
                                       .configData.siteCurrencyPosition ==
                                   10)
                                 Text(
-                                  splashController
-                                      .configData.siteDefaultCurrencySymbol!+" ",
+                                  splashController.configData
+                                          .siteDefaultCurrencySymbol! +
+                                      " ",
                                   style: fontRegularLite,
                                 ),
                             ],
@@ -1855,21 +1862,23 @@ Widget cartSummarySection(context) {
                                         .configData.siteCurrencyPosition ==
                                     5)
                                   Text(
-                                    splashController
-                                        .configData.siteDefaultCurrencySymbol!+" ",
+                                    splashController.configData
+                                            .siteDefaultCurrencySymbol! +
+                                        " ",
                                     style: fontRegularLite,
                                   ),
                                 Text(
-                                  formatter.format(
-                                  cartController.couponDiscount),
+                                  formatter
+                                      .format(cartController.couponDiscount),
                                   style: fontRegularLite,
                                 ),
                                 if (splashController
                                         .configData.siteCurrencyPosition ==
                                     10)
                                   Text(
-                                    splashController
-                                        .configData.siteDefaultCurrencySymbol!+" ",
+                                    splashController.configData
+                                            .siteDefaultCurrencySymbol! +
+                                        " ",
                                     style: fontRegularLite,
                                   ),
                               ],
@@ -1899,21 +1908,23 @@ Widget cartSummarySection(context) {
                                         .configData.siteCurrencyPosition ==
                                     5)
                                   Text(
-                                    splashController
-                                        .configData.siteDefaultCurrencySymbol!+" ",
+                                    splashController.configData
+                                            .siteDefaultCurrencySymbol! +
+                                        " ",
                                     style: fontRegularLite,
                                   ),
                                 Text(
-                                  formatter.format(
-                                  cartController.deliveryCharge),
+                                  formatter
+                                      .format(cartController.deliveryCharge),
                                   style: fontRegularBoldGreen,
                                 ),
                                 if (splashController
                                         .configData.siteCurrencyPosition ==
                                     10)
                                   Text(
-                                    splashController
-                                        .configData.siteDefaultCurrencySymbol!+" ",
+                                    splashController.configData
+                                            .siteDefaultCurrencySymbol! +
+                                        " ",
                                     style: fontRegularLite,
                                   ),
                               ],
@@ -1942,21 +1953,22 @@ Widget cartSummarySection(context) {
                                       .configData.siteCurrencyPosition ==
                                   5)
                                 Text(
-                                  splashController
-                                      .configData.siteDefaultCurrencySymbol!+" ",
+                                  splashController.configData
+                                          .siteDefaultCurrencySymbol! +
+                                      " ",
                                   style: fontMediumPro,
                                 ),
                               Text(
-                                formatter.format(
-                                cartController.total),
+                                formatter.format(cartController.total),
                                 style: fontMediumPro,
                               ),
                               if (splashController
                                       .configData.siteCurrencyPosition ==
                                   10)
                                 Text(
-                                  splashController
-                                      .configData.siteDefaultCurrencySymbol!+" ",
+                                  splashController.configData
+                                          .siteDefaultCurrencySymbol! +
+                                      " ",
                                   style: fontMediumPro,
                                 ),
                             ],

@@ -40,6 +40,7 @@ class ItemData {
     this.price,
     this.itemType,
     this.status,
+    this.branch_id,
     this.description,
     this.caution,
     this.thumb,
@@ -61,6 +62,7 @@ class ItemData {
   String? price;
   int? itemType;
   int? status;
+  int? branch_id;
   String? description;
   String? caution;
   String? thumb;
@@ -82,6 +84,7 @@ class ItemData {
         price: json["price"],
         itemType: json["item_type"],
         status: json["status"],
+        branch_id: json["branch_id"],
         description: json["description"],
         caution: json["caution"],
         thumb: json["thumb"],
@@ -113,6 +116,7 @@ class ItemData {
         "price": price,
         "item_type": itemType,
         "status": status,
+        "branch_id": branch_id,
         "description": description,
         "caution": caution,
         "thumb": thumb,

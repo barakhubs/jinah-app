@@ -16,8 +16,6 @@ import '../../cart/controllers/cart_controller.dart';
 import '../../splash/controllers/splash_controller.dart';
 import 'package:intl/intl.dart';
 
-
-
 class ItemView extends StatefulWidget {
   ItemData? itemDetails;
   int? indexNumber;
@@ -45,7 +43,7 @@ class _ItemViewState extends State<ItemView> {
   int itemQuantity = 0;
   int addOnsQuantity = 1;
   int qty = 1;
-  
+
   final formatter = NumberFormat('#,###');
 
   @override
@@ -1275,17 +1273,22 @@ class _ItemViewState extends State<ItemView> {
                               customTast("PLEASE_INCREASE_QUANTITY".tr,
                                   AppColor.error);
                             } else {
-                              cartController.addItem(
-                                  widget.itemDetails!,
-                                  extraList,
-                                  variationList,
-                                  totalPrice,
-                                  variationSum,
-                                  extraSum,
-                                  instructionTextController.text);
-                              cartController.addItemAddons(addonList);
-                              customTast("ADDED_TO_CART".tr, AppColor.success);
-                              Get.back();
+                              bool success = cartController.addItem(
+                                widget.itemDetails!,
+                                extraList,
+                                variationList,
+                                totalPrice,
+                                variationSum,
+                                extraSum,
+                                instructionTextController.text,
+                              );
+
+                              if (success) {
+                                cartController.addItemAddons(addonList);
+                                customTast(
+                                    "ADDED_TO_CART".tr, AppColor.success);
+                                Get.back();
+                              }
                             }
                             totalPrice = 0.0;
                             variationTotal = 0.0;
@@ -1329,9 +1332,9 @@ class _ItemViewState extends State<ItemView> {
                                       children: [
                                         Text(
                                           Get.find<SplashController>()
-                                              .configData
-                                              .siteDefaultCurrencySymbol!+" "
-                                              .toString(),
+                                                  .configData
+                                                  .siteDefaultCurrencySymbol! +
+                                              " ".toString(),
                                           style: fontMedium,
                                         ),
                                         Text(
@@ -1348,9 +1351,9 @@ class _ItemViewState extends State<ItemView> {
                                         ),
                                         Text(
                                           Get.find<SplashController>()
-                                              .configData
-                                              .siteDefaultCurrencySymbol!+" "
-                                              .toString(),
+                                                  .configData
+                                                  .siteDefaultCurrencySymbol! +
+                                              " ".toString(),
                                           style: fontMedium,
                                         ),
                                       ],

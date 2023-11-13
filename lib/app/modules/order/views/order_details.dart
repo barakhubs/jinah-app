@@ -153,7 +153,8 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                               height: 8.h,
                                             ),
                                             Text(
-                                              "${orderController.orderDetailsData.preparationTime} minutes"
+                                              "${orderController
+                                          .orderDetailsData.branch!.timeToPrepare!} minutes"
                                                   .tr,
                                               style: TextStyle(
                                                 fontSize: 25.sp,
