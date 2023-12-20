@@ -11,8 +11,7 @@ import 'app/modules/splash/bindings/splash_binding.dart';
 import 'app/routes/app_pages.dart';
 import 'helper/notification_helper.dart';
 import 'translation/language.dart';
-import 'package:flutter/rendering.dart';  // Ensure you have this import at the top
-
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -30,6 +29,31 @@ void main() async {
       body = NotificationHelper.convertNotification(remoteMessage.data);
     }
     await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
+
+    // Initialize OneSignal
+    await OneSignal.shared.setAppId("41a5fc47-4587-4084-9e84-7478c145e477");
+
+    // Handle notification received from Firebase
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Notification received from Firebase: ${message.data}");
+      // Handle Firebase notification
+    });
+
+    // Handle notification received from OneSignal while app is in the foreground
+    OneSignal.shared.setNotificationWillShowInForegroundHandler(
+        (OSNotificationReceivedEvent event) {
+      print(
+          "Received notification in the foreground: ${event.notification.body}");
+      // You can decide how to handle the notification here
+      event.complete(event.notification);
+    });
+
+// Handle notification opened event (user tapped on the notification)
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      print("Notification opened: ${result.notification.body}");
+      // Handle the notification opened event here
+    });
   } catch (e) {
     debugPrint(e.toString());
   }
@@ -46,7 +70,7 @@ void main() async {
       builder: ((context, child) => GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: "Jinah Foods",
-            translations: Languages(), 
+            translations: Languages(),
             locale: langValue,
             initialRoute: AppPages.INITIAL,
             getPages: AppPages.routes,

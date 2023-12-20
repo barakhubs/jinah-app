@@ -166,7 +166,7 @@ Map<String, String> english = {
   'CONFIRM_NEW_PASSWORD': 'Confirm New Password',
   'PLEASE_ADD_DELIVERY_ADDRESS': 'Please add your address',
   'PLEASE_CHOOSE_AN_ADDRESS': 'Please choose an address',
-  'CURRENTLY_NOT_ACCEPTING_ANY_ORDER': 'Currently not accepting any order!',
+  'CURRENTLY_NOT_ACCEPTING_ANY_ORDER': 'Oops! It seems you\'ve placed an order outside our operating hours.',
   'NOT_ACCEPTING_ANY_ORDER': 'Not accepting any order!',
   'PRESS_BACK_AGAIN_TO_EXIT': 'Press back again to exit.',
   'YOOUR_ORDER_IS_PLACED_SUCCESSFULLY': 'Your order is placed successfully',

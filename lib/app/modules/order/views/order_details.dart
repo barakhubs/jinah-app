@@ -153,8 +153,7 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                               height: 8.h,
                                             ),
                                             Text(
-                                              "${orderController
-                                          .orderDetailsData.branch!.timeToPrepare!} minutes"
+                                              "${orderController.orderDetailsData.branch!.timeToPrepare!} minutes"
                                                   .tr,
                                               style: TextStyle(
                                                 fontSize: 25.sp,
@@ -426,7 +425,15 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                                 .orderDetailsData.transaction ==
                                             null)
                                       Text(
-                                        " ry",
+                                        orderController.orderDetailsData
+                                                    .paymentMethod ==
+                                                1
+                                            ? 'Cash on Delivery'
+                                            : (orderController.orderDetailsData
+                                                        .paymentMethod ==
+                                                    2
+                                                ? 'Mobile money'
+                                                : ''),
                                         style: TextStyle(
                                           fontFamily: "Rubik",
                                           fontSize: 12.sp,
@@ -570,11 +577,12 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                                                           8.r)),
                                                           child:
                                                               CachedNetworkImage(
-                                                            imageUrl: 'https://admin.jinahonestop.com' + orderController
-                                                                .orderDetailsData
-                                                                .orderItems![
-                                                                    index]
-                                                                .itemImage!,
+                                                            imageUrl: 'https://admin.jinahonestop.com' +
+                                                                orderController
+                                                                    .orderDetailsData
+                                                                    .orderItems![
+                                                                        index]
+                                                                    .itemImage!,
                                                             imageBuilder: (context,
                                                                     imageProvider) =>
                                                                 Container(
@@ -588,7 +596,7 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                                                       .cover,
                                                                 ),
                                                               ),
-                                                            ), 
+                                                            ),
                                                             placeholder: (context,
                                                                     url) =>
                                                                 Shimmer
@@ -904,7 +912,10 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                             .orderDetailsData.paymentStatus !=
                                         5 &&
                                     (orderController.orderDetailsData.status !=
-                                        16 && orderController.orderDetailsData.status != 1) &&
+                                            16 &&
+                                        orderController
+                                                .orderDetailsData.status !=
+                                            1) &&
                                     connect.configData.siteOnlinePaymentGateway
                                             .toString() ==
                                         '5')

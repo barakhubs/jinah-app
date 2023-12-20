@@ -145,4 +145,5 @@ class Images {
   static String get animationDelivered => 'assets/animation/delivered.json';
   static String get locationService => 'assets/icons/location_service.svg';
   static String get iconMap => 'assets/icons/map_icon.svg';
+  static String get orderImg => 'assets/images/order.png';
 }

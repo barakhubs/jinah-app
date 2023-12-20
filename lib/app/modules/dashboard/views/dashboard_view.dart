@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jinahfoods/app/modules/order/views/order_view.dart';
 import 'package:jinahfoods/app/modules/restaurants/views/restaurant_view.dart';
 import 'package:jinahfoods/app/modules/restaurants/views/restaurant_items_view.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,8 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardView> {
   final box = GetStorage();
+
+  bool? isLogedIn;
   PageController? pageController;
   int pageIndex = 0;
   List<Widget>? screens;
@@ -41,7 +44,7 @@ class _DashboardScreenState extends State<DashboardView> {
       HomeView(),
       RestaurantView(),
       CartView(fromNav: true),
-      OfferView(),
+      OrderView(),
       ProfileView(),
     ];
     notificationHelper.notificationPermission();
@@ -156,8 +159,8 @@ class _DashboardScreenState extends State<DashboardView> {
                 onTap: () => _setPage(1)),
             Expanded(child: SizedBox()),
             BottomNavItem(
-                tittle: "OFFERS".tr,
-                imageData: AssetImage(Images.offer),
+                tittle: "MY_ORDERS".tr,
+                imageData: AssetImage(Images.orderImg),
                 isSelected: pageIndex == 3,
                 onTap: () => _setPage(3)),
             BottomNavItem(

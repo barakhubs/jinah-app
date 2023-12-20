@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:jinahfoods/app/modules/auth/views/login_view.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../util/constant.dart';
 import '../../../../util/style.dart';
 import '../../../../widget/loader.dart';
 import '../controllers/order_controller.dart';
+
+import 'package:get_storage/get_storage.dart';
 
 class OrderView extends StatefulWidget {
   const OrderView({super.key});
@@ -26,6 +29,10 @@ class _OrderViewState extends State<OrderView> {
     super.initState();
   }
 
+  final box = GetStorage();
+
+  bool? isLogedIn;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrderController>(
@@ -34,25 +41,13 @@ class _OrderViewState extends State<OrderView> {
           Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              titleSpacing: -5,
               title: Text(
-                'MY_ORDERS'.tr,
-                style: TextStyle(
-                  fontFamily: "Rubik",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.sp,
-                  color: Colors.black,
-                ),
+                'My Orders',
+                style: fontBoldWithColorBlack,
               ),
-              centerTitle: false,
+              centerTitle: true,
               elevation: 0,
               backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: SvgPicture.asset(Images.back),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
             ),
             body: RefreshIndicator(
               color: AppColor.primaryColor,
@@ -64,20 +59,22 @@ class _OrderViewState extends State<OrderView> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    orderController.loader
-                        ? activeOrderSectionShimmer()
-                        : activeOrderSection(),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    orderController.loader
-                        ? previousOrdersShimmer()
-                        : previousOrders(),
-                  ],
+                  children: box.read('isLogedIn') == true
+                      ? [
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          orderController.loader
+                              ? activeOrderSectionShimmer()
+                              : activeOrderSection(),
+                          SizedBox(
+                            height: 24.h,
+                          ),
+                          orderController.loader
+                              ? previousOrdersShimmer()
+                              : previousOrders(),
+                        ]
+                      : [notLogged()],
                 ),
               ),
             ),
@@ -98,6 +95,77 @@ class _OrderViewState extends State<OrderView> {
       ),
     );
   }
+}
+
+Widget notLogged() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      SizedBox(
+        child: Column(children: [
+          SizedBox(
+            height: 20.h,
+          ),
+          SizedBox(
+            width: 100.w,
+            height: 100.h,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Image.asset(
+                Images.profile,
+                width: 100.w,
+                height: 100.h,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 16.h,
+          ),
+          Text(
+            'Login to see your orders',
+            style: TextStyle(
+              fontFamily: 'Rubik',
+              fontSize: 14.sp,
+              color: AppColor.fontColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => LoginView());
+
+                    // (context as Element).markNeedsBuild();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    minimumSize: Size(320.w, 52.h),
+                    backgroundColor: AppColor.loginButtonColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(26.r),
+                    ),
+                  ),
+                  child: Text("LOGIN".tr, style: fontMedium),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 32.h,
+          ),
+        ]),
+      ),
+    ],
+  );
 }
 
 Widget activeOrderSection() {

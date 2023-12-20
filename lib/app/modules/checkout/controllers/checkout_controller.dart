@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../data/model/response/time_slot_model.dart';
 import '../../../data/repository/time_slot_repo.dart';
-
+                                                                                  
 class CheckoutController extends GetxController {
   bool couponApplied = false;
   // List<TimeSlotModel>? allTimeSlots;

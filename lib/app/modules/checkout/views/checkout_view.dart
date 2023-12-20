@@ -1220,7 +1220,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                                       customTast("PLEASE_CHOOSE_AN_ADDRESS".tr,
                                           AppColor.error);
                                     }else if (cartController.kilometer >= 9.5) {
-                                      customTast("We only deliver within the city",
+                                      customTast("Oops! We're currently unavailable in this area.",
                                           AppColor.error);
                                     } else {
                                       placeOrderController.placeOrderPost(

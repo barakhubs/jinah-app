@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 class APIList {
-  static String? mapApiKey = "AIzaSyB3ewOpBXUEzrjQdmS0wanQWqlAGkUbFAI";
+  static String? mapApiKey = "AIzaSyBBaQo7_sF2xk3uNIyKp_Z-4BbaTebGGa4";
   static String? licenseCode = "00TdJKnn5Ck8kWHNd/BuZkVvZD8JPsNSSeMVdSveZ+0=";
   static String? baseUrl = "https://admin.jinahonestop.com";
   static String? paymentUrl = "${baseUrl!}/payment/";

@@ -129,6 +129,8 @@ class CartController extends GetxController {
             itemVariations: variationList,
           ),
         );
+        String branchDeliveryCharge = mainItem.delivery_charge!;
+        deliveryCharge = double.parse(branchDeliveryCharge);
 
         return true;
       } else {
@@ -138,12 +140,12 @@ class CartController extends GetxController {
       }
     }
 
-    selectedExtraIndex.clear();
-    selectedAddOnsIndex.clear();
-    itemQuantity = 1;
-    update();
-    calculateTotal();
-    update();
+    // selectedExtraIndex.clear();
+    // selectedAddOnsIndex.clear();
+    // itemQuantity = 1;
+    // update();
+    // calculateTotal();
+    // update();
   }
 
   //old code
@@ -324,13 +326,13 @@ class CartController extends GetxController {
   distanceWiseDeliveryCharge() {
     print(roundedKilometer);
     if (roundedKilometer <= 1) {
-      deliveryCharge = 1000;
+      deliveryCharge = 1000 + deliveryCharge;
     } else if (roundedKilometer <= 2) {
-      deliveryCharge = 2000;
+      deliveryCharge = 2000 +deliveryCharge;
     } else if (roundedKilometer <= 3) {
-      deliveryCharge = 3500;
+      deliveryCharge = 3500 + deliveryCharge;
     } else {
-      deliveryCharge = (3500 + ((roundedKilometer - 3) * 1000));
+      deliveryCharge = (3500 + ((roundedKilometer - 3) * 1000)) + deliveryCharge;
     }
 
     if (orderTypeIndex == 0) {
