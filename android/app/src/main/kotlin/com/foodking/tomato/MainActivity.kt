@@ -1,4 +1,4 @@
-package com.jinahonestop.jinah
+package com.jinahonestop.jinahfoods
 
 import io.flutter.embedding.android.FlutterActivity
 

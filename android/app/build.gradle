@@ -50,10 +50,10 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.jinahonestop.jinah"
+        applicationId "com.jinahonestop.jinahfoods"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode flutterVersionCode.toInteger()
+        versionCode 1
         versionName flutterVersionName
     }
     signingConfigs {

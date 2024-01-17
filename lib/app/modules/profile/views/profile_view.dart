@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:jinahfoods/app/modules/profile/widget/chat_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../util/api-list.dart';
 import '../../../../util/constant.dart';
@@ -45,6 +46,23 @@ class _ProfileViewState extends State<ProfileView> {
       profileController.getProfileData();
     }
   }
+
+// Function to remove OneSignal Player ID
+Future<void> removeOneSignalPlayerID() async {
+  try {
+    // Get the current OneSignal user ID
+    OSDeviceState? deviceState = await OneSignal.shared.getDeviceState();
+    String? playerId = deviceState?.userId;
+
+    // Remove the OneSignal Player ID
+    await OneSignal.shared.removeExternalUserId();
+    
+    // Print a message or perform additional cleanup if needed
+    print('OneSignal Player ID removed: $playerId');
+  } catch (e) {
+    print('Error removing OneSignal Player ID: $e');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -371,7 +389,10 @@ class _ProfileViewState extends State<ProfileView> {
 
                         if (box.read('isLogedIn') == true)
                           InkWell(
-                            onTap: () {
+                            onTap: () async {
+                              // Remove OneSignal Player ID
+                              // await removeOneSignalPlayerID();
+                              
                               box.write('isLogedIn', false);
                               (context as Element).markNeedsBuild();
                               Get.offAll(() => const DashboardView());

@@ -96,6 +96,8 @@ class CartController extends GetxController {
     extraSum,
     instruction,
   ) {
+    
+     try {
     // Check if the product already exists in the cart
     final existingItemIndex = cart.indexWhere(
       (item) => item.itemId == mainItem.id,
@@ -108,6 +110,7 @@ class CartController extends GetxController {
 
       return true;
     } else {
+      
       // If the product does not exist, add a new item to the cart
       if (cart.isEmpty || mainItem.branch_id == cart[0].branchId) {
         cart.add(
@@ -117,8 +120,8 @@ class CartController extends GetxController {
             itemPrice: mainItem.offer!.isEmpty
                 ? mainItem.convertPrice
                 : mainItem.offer![0].convertPrice,
-            branchId: mainItem.branch_id,
-            itemImage: mainItem.cover,
+            branchId: (mainItem.branch_id ?? 0), // Use a default value if branch_id is null
+            itemImage: mainItem.cover ?? "",
             quantity: itemQuantity,
             discount: couponDiscount,
             instruction: instruction,
@@ -129,8 +132,9 @@ class CartController extends GetxController {
             itemVariations: variationList,
           ),
         );
-        String branchDeliveryCharge = mainItem.delivery_charge!;
-        deliveryCharge = double.parse(branchDeliveryCharge);
+        String? branchDeliveryCharge = mainItem.delivery_charge;
+        deliveryCharge = double.parse(branchDeliveryCharge ?? "0.0");
+
 
         return true;
       } else {
@@ -139,6 +143,12 @@ class CartController extends GetxController {
         return false; // Exit the method if different branch is detected
       }
     }
+  } catch (e) {
+    print('Error adding item to cart: $e');
+    // Handle the error as needed
+    return false;
+  }
+
 
     // selectedExtraIndex.clear();
     // selectedAddOnsIndex.clear();

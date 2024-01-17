@@ -1,7 +1,7 @@
 name: jinahfoods
-version: 1.0.7+7
+version: 1.0.0
 publish_to: none
-description: A new Flutter project.
+description: Fast and Affordable Food Delivery
 environment: 
   sdk: '>=3.0.6 <4.0.0'
 

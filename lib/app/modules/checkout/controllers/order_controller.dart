@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:jinahfoods/app/modules/order/views/order_view.dart';
 import '../../../../util/api-list.dart';
 import '../../../../util/constant.dart';
 import '../../../../widget/custom_snackbar.dart';
@@ -46,6 +47,7 @@ class PlaceOrderController extends GetxController {
       if (response != null && response.statusCode == 201) {
         loader = false;
         update();
+        Get.to(() => OrderView());
         Get.find<CartController>().cart.clear();
         final jsonResponse = json.decode(response.body);
         orderDetailsModel = OrderDetailsModel.fromJson(jsonResponse);

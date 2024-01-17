@@ -233,7 +233,7 @@ class _HomeViewState extends State<HomeView> {
                                                         image: DecorationImage(
                                                           image: NetworkImage(
                                                               item),
-                                                          fit: BoxFit.cover,
+                                                          fit: BoxFit.fill,
                                                         ),
                                                       ),
                                                     ),
