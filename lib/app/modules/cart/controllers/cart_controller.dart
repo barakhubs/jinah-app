@@ -315,25 +315,19 @@ class CartController extends GetxController {
     }
   }
 
-  calculateDistance(lat1, lon1, lat2, lon2) {
+  Future<String> calculateDistance(lat1, lon1, lat2, lon2) async {
     deliveryCharge = 0.0;
     var p = 0.017453292519943295;
     var a = 0.5 -
         cos((lat2 - lat1) * p) / 2 +
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     kilometer = 12742 * asin(sqrt(a));
-    distanceWiseDeliveryCharge();
-    // return kilometer.toStringAsFixed(0);
-
-    // Round off to the nearest tenth
     roundedKilometer = (kilometer * 1).round() / 1;
-
-    // Call the distanceWiseDeliveryCharge function using the rounded value
-    distanceWiseDeliveryCharge();
+    await distanceWiseDeliveryCharge();
     return roundedKilometer.toString();
   }
 
-  distanceWiseDeliveryCharge() {
+  Future<void> distanceWiseDeliveryCharge() async {
     print(roundedKilometer);
     if (roundedKilometer <= 1) {
       deliveryCharge = 1000 + deliveryCharge;
@@ -355,44 +349,6 @@ class CartController extends GetxController {
       deliveryCharge = 0.0;
     }
   }
-
-  // calculateDistance(double customerLat, double customerLon) {
-  //   double fixedLat = 3.020505748699635;
-  //   double fixedLon = 30.91136695179617;
-
-  //   var p = 0.017453292519943295;
-  //   var a = 0.5 -
-  //       cos((customerLat - fixedLat) * p) / 2 +
-  //       cos(fixedLat * p) *
-  //           cos(customerLat * p) *
-  //           (1 - cos((customerLon - fixedLon) * p)) /
-  //           2;
-
-  //   kilometer = 12742 * asin(sqrt(a));
-  //   distanceWiseDeliveryCharge();
-  //   return kilometer.toStringAsFixed(0);
-  // }
-
-  // distanceWiseDeliveryCharge() {
-  //   if (kilometer >= 1 && kilometer < 2) {
-  //     deliveryCharge = 1000;
-  //   } else if (kilometer >= 2 && kilometer < 3) {
-  //     deliveryCharge = 2000;
-  //   } else if (kilometer >= 3) {
-  //     deliveryCharge = 3500;
-  //   }
-
-  //   if (orderTypeIndex == 0) {
-  //     total = deliveryCharge + totalCartValue;
-  //   } else if (orderTypeIndex == 1) {
-  //     total = totalCartValue;
-  //     deliveryCharge = 0.0;
-  //   } else if (orderTypeIndex == 10) {
-  //     total = totalCartValue;
-  //     deliveryCharge = 0.0;
-  //   }
-  //   update();
-  // }
 
   Future<CouponCheckModel?> checkCoupon() async {
     couponLoading = true;

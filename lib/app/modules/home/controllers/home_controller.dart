@@ -29,6 +29,7 @@ class HomeController extends GetxController {
   List<BranchData> popularBranchDataList = <BranchData>[];
   List<BranchData> latestBranchDataList = <BranchData>[];
   List<BannerModel> banners = [];
+  
 
   String? selectedBranch;
   int? selectedbranchId;

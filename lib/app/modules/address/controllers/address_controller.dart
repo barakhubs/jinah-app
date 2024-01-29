@@ -409,6 +409,7 @@ class AddressController extends GetxController {
         addAddressLoader = false;
         getAddressList();
         update();
+        Get.find<CartController>().distanceWiseDeliveryCharge();
         Get.back();
         Get.back();
         customSnackbar(
