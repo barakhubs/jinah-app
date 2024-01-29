@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.jinahonestop.jinahfoods.ios</string>
+	<string>com.jinahonestop.jinah.ios</string>
 	<key>PROJECT_ID</key>
 	<string>foodking-inilabs</string>
 	<key>STORAGE_BUCKET</key>

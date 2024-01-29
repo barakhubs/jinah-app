@@ -50,7 +50,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.jinahonestop.jinahfoods"
+        applicationId "com.jinahonestop.jinah"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
