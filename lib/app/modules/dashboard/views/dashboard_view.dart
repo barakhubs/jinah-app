@@ -106,6 +106,7 @@ class _DashboardScreenState extends State<DashboardView> {
             onPressed: () {
               _setPage(2);
             },
+            backgroundColor: Colors.transparent, // Set background color to transparent
             child: GetBuilder<CartController>(
               builder: (cartController) => Stack(
                 children: [

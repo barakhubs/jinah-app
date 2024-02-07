@@ -3,9 +3,9 @@
 import 'package:flutter/cupertino.dart';
 
 class AppColor {
-  static const Color primaryColor = Color(0xffff8625);
+  static const Color primaryColor = Color(0xFFFF9500);
   static const Color primaryBackgroundColor = Color(0xffFFFBFB);
-  static const Color loginButtonColor = Color(0xffff8625);
+  static const Color loginButtonColor = Color(0xFFFF9500);
   static const Color fontColor = Color(0xff1F1F39);
   static const Color dividerColor = Color(0xffEFF0F6);
   static const Color textSignupColor = Color(0xff6E7191);
@@ -15,25 +15,25 @@ class AppColor {
   static const Color activeTxtColor = Color(0xff008BBA);
   static const Color activeTxtBorderColor = Color(0xff6FF8A6);
   static const Color deleveryColor = Color(0xffBDEFFF);
-  static const Color redColor = Color(0xffff8625);
-  static const Color deleteBtnColor = Color(0xffff8625);
+  static const Color redColor = Color(0xFFFF9500);
+  static const Color deleteBtnColor = Color(0xFFFF9500);
   static const Color searchBarbg = Color(0xffF7F7FC);
   static const Color viewAllbg = Color(0xffFFEDF4);
   static const Color itembg = Color(0xffEFF0F6);
   static const Color delivaryActive = Color(0xff008BBA);
   static const Color delivaryInactive = Color(0xffBDEFFF);
   static const Color green = Color(0xff1AB759);
-  static const Color yellow = Color(0xffFFDB1F);
+  static const Color yellow = Color(0xFFFFD000);
   static const Color gray = Color(0xff6E7191);
   static const Color bgColor = Color(0xffF7F7FC);
   static const Color darkGray = Color(0xff1F1F39);
   static const Color blueTransparent = Color(0xffD6F5FF);
   static const Color blueTextColor = Color(0xff00749B);
-  static const Color warning = Color(0xffF6A609);
+  static const Color warning = Color(0xFFFFB700);
   static const Color success = Color(0xff2AC769);
-  static const Color error = Color(0xffff8625);
+  static const Color error = Color(0xFFFF9500);
   static const Color pending = Color(0xffFFEEC6);
-  static const Color pendingText = Color(0xffF6A609);
+  static const Color pendingText = Color(0xFFFFB700);
   static const Color preparing = Color(0xffE1FFED);
   static const Color preparingText = Color(0xff2AC769);
   static const Color ontheway = Color(0xffBDEFFF);

@@ -339,7 +339,7 @@ class CartController extends GetxController {
       deliveryCharge = 3500 + deliveryCharge;
     } else {
       deliveryCharge =
-          (3500 + ((roundedKilometer - 3) * 1000)) + deliveryCharge;
+          (3500 + ((roundedKilometer - 3) * 500)) + deliveryCharge;
     }
 
     if (orderTypeIndex == 0) {
