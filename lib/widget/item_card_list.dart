@@ -41,7 +41,7 @@ Widget itemCardList(item, index, context) {
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
               child: CachedNetworkImage(
-                imageUrl:'https://admin.jinahonestop.com' +  item[index].cover!,
+                imageUrl:item[index].cover!,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(

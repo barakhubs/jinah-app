@@ -94,7 +94,7 @@ Widget homeMenuSection() {
                                   height: 30.h,
                                   width: 40.w,
                                   child: CachedNetworkImage(
-                                    imageUrl: 'https://admin.jinahonestop.com' + menuController
+                                    imageUrl: menuController
                                         .categoryDataList[index].cover!,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(

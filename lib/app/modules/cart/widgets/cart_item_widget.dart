@@ -40,7 +40,7 @@ Widget cartItemSection() {
                         child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(8.r)),
                           child: CachedNetworkImage(
-                            imageUrl: 'https://admin.jinahonestop.com' +
+                            imageUrl: 
                                 cartController.cart[index].itemImage!,
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(

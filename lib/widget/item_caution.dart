@@ -81,16 +81,25 @@ class _ItemCautionState extends State<ItemCaution> {
               height: 16.h,
             ),
             Flexible(
-              child: Text(
-                widget.itemCaution!,
-                maxLines: 12,
-                style: TextStyle(
-                  fontFamily: 'Rubik',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13.sp,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
+              child: widget.itemCaution != null && widget.itemCaution !=""
+                ? Text(
+                    widget.itemCaution!,
+                    maxLines: 12,
+                    style: TextStyle(
+                      fontFamily: 'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13.sp,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                : Text(
+                    'No caution yet',
+                    style: TextStyle(
+                      fontFamily: 'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13.sp,
+                    ),
+                  ),
             ),
           ],
         ),

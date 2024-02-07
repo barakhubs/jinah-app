@@ -77,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
           imgList.clear();
           imgList.addAll(
             fetchedData
-                .map((item) => 'https://admin.jinahonestop.com' + item['image'])
+                .map((item) => item['image'])
                 .toList()
                 .cast<String>(),
           );

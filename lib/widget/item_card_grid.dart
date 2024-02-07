@@ -48,7 +48,7 @@ Widget _buildImage(item, index) {
         topRight: Radius.circular(16.r),
       ),
       child: CachedNetworkImage(
-        imageUrl: 'https://admin.jinahonestop.com' + item[index].cover!,
+        imageUrl: item[index].cover!,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             image: DecorationImage(

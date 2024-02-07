@@ -1494,7 +1494,7 @@ Widget bottomSheetItem(ItemData itemDetails, indexNumber, context) {
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(8.r)),
               child: CachedNetworkImage(
-                imageUrl: 'https://admin.jinahonestop.com' + itemDetails.cover!,
+                imageUrl: itemDetails.cover!,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(

@@ -428,7 +428,7 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                         orderController.orderDetailsData
                                                     .paymentMethod ==
                                                 1
-                                            ? 'Cash on Delivery'
+                                            ? 'Mobile Money' // Can be changed to Cash on Delivery later. for now we only use mobile money
                                             : (orderController.orderDetailsData
                                                         .paymentMethod ==
                                                     2
@@ -577,7 +577,7 @@ class _StatusViewViewState extends State<OrderDetailsView> {
                                                                           8.r)),
                                                           child:
                                                               CachedNetworkImage(
-                                                            imageUrl: 'https://admin.jinahonestop.com' +
+                                                            imageUrl: 
                                                                 orderController
                                                                     .orderDetailsData
                                                                     .orderItems![

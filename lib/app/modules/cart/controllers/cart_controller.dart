@@ -35,6 +35,7 @@ class CartController extends GetxController {
   double deliveryCharge = 0.0;
   double total = 0;
   int orderTypeIndex = 0;
+  int selectedBranchIndex = 0;
 
   double totalQunty = 0;
   double kilometer = 0;
@@ -96,59 +97,59 @@ class CartController extends GetxController {
     extraSum,
     instruction,
   ) {
-    
-     try {
-    // Check if the product already exists in the cart
-    final existingItemIndex = cart.indexWhere(
-      (item) => item.itemId == mainItem.id,
-    );
+    try {
+      // Check if the product already exists in the cart
+      final existingItemIndex = cart.indexWhere(
+        (item) => item.itemId == mainItem.id,
+      );
 
-    if (existingItemIndex != -1) {
-      // If the product already exists, increase the quantity and update the total price
-      cart[existingItemIndex].quantity =
-          cart[existingItemIndex].quantity! + itemQuantity;
-
-      return true;
-    } else {
-      
-      // If the product does not exist, add a new item to the cart
-      if (cart.isEmpty || mainItem.branch_id == cart[0].branchId) {
-        cart.add(
-          Cart(
-            itemId: mainItem.id,
-            itemName: mainItem.name,
-            itemPrice: mainItem.offer!.isEmpty
-                ? mainItem.convertPrice
-                : mainItem.offer![0].convertPrice,
-            branchId: (mainItem.branch_id ?? 0), // Use a default value if branch_id is null
-            itemImage: mainItem.cover ?? "",
-            quantity: itemQuantity,
-            discount: couponDiscount,
-            instruction: instruction,
-            totalPrice: totalPrice,
-            itemVariationTotal: variationSum,
-            itemExtraTotal: extraSum,
-            itemExtras: extra,
-            itemVariations: variationList,
-          ),
-        );
-        String? branchDeliveryCharge = mainItem.delivery_charge;
-        deliveryCharge = double.parse(branchDeliveryCharge ?? "0.0");
-
+      if (existingItemIndex != -1) {
+        // If the product already exists, increase the quantity and update the total price
+        cart[existingItemIndex].quantity =
+            cart[existingItemIndex].quantity! + itemQuantity;
 
         return true;
       } else {
-        // Display toast message if the branch is different
-        showToast("Items with different branches are not allowed in the cart");
-        return false; // Exit the method if different branch is detected
-      }
-    }
-  } catch (e) {
-    print('Error adding item to cart: $e');
-    // Handle the error as needed
-    return false;
-  }
+        // If the product does not exist, add a new item to the cart
+        if (cart.isEmpty || mainItem.branch_id == cart[0].branchId) {
+          cart.add(
+            Cart(
+              itemId: mainItem.id,
+              itemName: mainItem.name,
+              itemPrice: mainItem.offer!.isEmpty
+                  ? mainItem.convertPrice
+                  : mainItem.offer![0].convertPrice,
+              branchId: (mainItem.branch_id ??
+                  0), // Use a default value if branch_id is null
+              itemImage: mainItem.cover ?? "",
+              quantity: itemQuantity,
+              discount: couponDiscount,
+              instruction: instruction,
+              totalPrice: totalPrice,
+              itemVariationTotal: variationSum,
+              itemExtraTotal: extraSum,
+              itemExtras: extra,
+              itemVariations: variationList,
+            ),
+          );
+          String? branchDeliveryCharge = mainItem.delivery_charge;
+          deliveryCharge = double.parse(branchDeliveryCharge ?? "0.0");
 
+          homeController.setSelectedBranchId(mainItem.branch_id!);
+
+          return true;
+        } else {
+          // Display toast message if the branch is different
+          showToast(
+              "Items with different branches are not allowed in the cart");
+          return false; // Exit the method if different branch is detected
+        }
+      }
+    } catch (e) {
+      print('Error adding item to cart: $e');
+      // Handle the error as needed
+      return false;
+    }
 
     // selectedExtraIndex.clear();
     // selectedAddOnsIndex.clear();
@@ -316,6 +317,7 @@ class CartController extends GetxController {
   }
 
   Future<String> calculateDistance(lat1, lon1, lat2, lon2) async {
+    print("lat1: $lat1, lon1: $lon1, lat2: $lat2, lon2: $lon2");
     deliveryCharge = 0.0;
     var p = 0.017453292519943295;
     var a = 0.5 -
@@ -332,11 +334,12 @@ class CartController extends GetxController {
     if (roundedKilometer <= 1) {
       deliveryCharge = 1000 + deliveryCharge;
     } else if (roundedKilometer <= 2) {
-      deliveryCharge = 2000 +deliveryCharge;
+      deliveryCharge = 2000 + deliveryCharge;
     } else if (roundedKilometer <= 3) {
       deliveryCharge = 3500 + deliveryCharge;
     } else {
-      deliveryCharge = (3500 + ((roundedKilometer - 3) * 1000)) + deliveryCharge;
+      deliveryCharge =
+          (3500 + ((roundedKilometer - 3) * 1000)) + deliveryCharge;
     }
 
     if (orderTypeIndex == 0) {

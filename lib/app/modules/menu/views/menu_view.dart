@@ -210,7 +210,7 @@ Widget menuSection(bool fromHome, int categoryId) {
                             height: 30.h, 
                             width: 40.w,
                             child: CachedNetworkImage(
-                              imageUrl: 'https://admin.jinahonestop.com' + menuController
+                              imageUrl: menuController
                                   .categoryDataList[index].cover!
                                   .toString(),
                               imageBuilder: (context, imageProvider) =>

@@ -81,14 +81,25 @@ Widget cartBottomSection() {
           children: [
             ElevatedButton(
               onPressed: () {
-                if (box.read('isLogedIn')) {
-                  Get.to(
-                    () => CheckoutView(),
-                  );
-                } else {
-                  Get.to(LoginView());
+                // if (box.read('isLogedIn')) {
+                //   Get.to(
+                //     () => CheckoutView(),
+                //   );
+                // } else {
+                //   Get.to(LoginView());
+                // }
+                try {
+                  if (box.read('isLogedIn')) {
+                    Get.to(() => CheckoutView());
+                  } else {
+                    Get.to(LoginView());
+                  }
+                } catch (e, stackTrace) {
+                  print("Error: $e");
+                  print("Stack Trace: $stackTrace");
                 }
               },
+              
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 backgroundColor: AppColor.primaryColor,

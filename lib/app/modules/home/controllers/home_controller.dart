@@ -75,12 +75,22 @@ class HomeController extends GetxController {
     selectedbranchId = branchDataList[selectedBranchIndex]
         .id!; //new add for issue in place order page
   }
+  
 
   setSelectedBranchIndex(int index) {
     selectedBranchIndex = index;
     update();
   }
 
+  setSelectedBranchId(int id) {
+    selectedbranchId = id;
+    update();
+  }
+
+  int findBranchIndexById(int branchId) {
+    return branchDataList.indexWhere((branch) => branch.id == branchId);
+  }
+  
   getCategoryList() async {
     menuLoader = true;
     update();

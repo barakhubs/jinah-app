@@ -60,8 +60,10 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   bool maploading = true;
 
-  double branchLat = 3.020505748699635;
-  double branchLong = 30.91136695179617;
+  // double branchLat = 3.020505748699635;
+  // double branchLong = 30.91136695179617;
+  double branchLat = 0.0;
+  double branchLong = 0.0;
   double addressLat = 0.0;
   double addressLon = 0.0;
 
@@ -96,14 +98,14 @@ class _CheckoutViewState extends State<CheckoutView> {
           addressController.addressDataList[0].longitude.toString());
     }
 
-    // if (homeController.branchDataList.isNotEmpty) {
-    //   branchLat = double.parse(homeController
-    //       .branchDataList[homeController.selectedBranchIndex].latitude
-    //       .toString());
-    //   branchLong = double.parse(homeController
-    //       .branchDataList[homeController.selectedBranchIndex].longitude
-    //       .toString());
-    // }
+    if (homeController.branchDataList.isNotEmpty) {
+      branchLat = double.parse(homeController
+          .branchDataList[homeController.findBranchIndexById(homeController.selectedbranchId!)].latitude
+          .toString());
+      branchLong = double.parse(homeController
+          .branchDataList[homeController.findBranchIndexById(homeController.selectedbranchId!)].longitude
+          .toString());
+    }
 
     cartController.calculateDistance(
         addressLat, addressLon, branchLat, branchLong);
@@ -571,7 +573,203 @@ class _CheckoutViewState extends State<CheckoutView> {
                               ),
                             ),
 
-
+                            //preference time to delivery
+                          GetBuilder<CheckoutController>(
+                            builder: (checkoutController) => Padding(
+                              padding: EdgeInsets.only(
+                                  left: 16.w, bottom: 24.w, right: 8.w),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 8.w),
+                                        child: Text(
+                                          "PREFERENCE_TIME_TO_DELIVERY".tr,
+                                          style: fontMedium,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 12.h,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 40.h,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            itemCount: 2,
+                                            itemBuilder: (context, index) {
+                                              return TimeSlotWidget(
+                                                title: index == 0
+                                                    ? 'TODAY'.tr
+                                                    : 'TOMORROW'.tr,
+                                                isSelected: checkoutController
+                                                        .selectDateSlot ==
+                                                    index,
+                                                onTap: () {
+                                                  checkoutController
+                                                      .updateDateSlot(index);
+                                                },
+                                              );
+                                            }),
+                                      ),
+                                      SizedBox(
+                                        width: 12.w,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
+                                  if (checkoutController.selectDateSlot == 0)
+                                    Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 40.h,
+                                        child: checkoutController
+                                                    .todayDataList !=
+                                                null
+                                            ? checkoutController
+                                                    .todayDataList.isNotEmpty
+                                                ? ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const BouncingScrollPhysics(),
+                                                    itemCount:
+                                                        checkoutController
+                                                            .todayDataList
+                                                            .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return TimeSlotWidget(
+                                                        title: (index == 0 &&
+                                                                checkoutController
+                                                                        .selectDateSlot ==
+                                                                    0
+                                                            ? 'NOW'.tr
+                                                            : checkoutController
+                                                                .todayDataList[
+                                                                    index]
+                                                                .label!),
+                                                        isSelected:
+                                                            checkoutController
+                                                                    .selectTimeSlot ==
+                                                                index,
+                                                        onTap: () {
+                                                          selectedDate =
+                                                              checkoutController
+                                                                  .todayDataList[
+                                                                      index]
+                                                                  .time!;
+                                                          isAdvanceOrder = 10;
+                                                          checkoutController
+                                                              .updateTimeSlot(
+                                                                  index);
+                                                        },
+                                                      );
+                                                    },
+                                                  )
+                                                : Container(
+                                                    height: 60.h,
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.r),
+                                                        color: AppColor
+                                                            .primaryColor
+                                                            .withOpacity(0.08),
+                                                        border: Border.all(
+                                                            color: AppColor
+                                                                .primaryColor)),
+                                                    child: Center(
+                                                        child: Text(
+                                                      "CURRENTLY_NOT_ACCEPTING_ANY_ORDER"
+                                                          .tr,
+                                                      style: fontRegularBold,
+                                                    )),
+                                                  )
+                                            : const Center(
+                                                child:
+                                                    CircularProgressIndicator())),
+                                  if (checkoutController.selectDateSlot == 1)
+                                    Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 40.h,
+                                        child: checkoutController
+                                                    .tomorrowDataList !=
+                                                null
+                                            ? checkoutController
+                                                    .tomorrowDataList.isNotEmpty
+                                                ? ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const BouncingScrollPhysics(),
+                                                    itemCount:
+                                                        checkoutController
+                                                            .tomorrowDataList
+                                                            .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return TimeSlotWidget(
+                                                        title: checkoutController
+                                                            .tomorrowDataList[
+                                                                index]
+                                                            .label!,
+                                                        isSelected:
+                                                            checkoutController
+                                                                    .selectTimeSlot ==
+                                                                index,
+                                                        onTap: () {
+                                                          selectedDate =
+                                                              checkoutController
+                                                                  .tomorrowDataList[
+                                                                      index]
+                                                                  .time!;
+                                                          isAdvanceOrder = 5;
+                                                          checkoutController
+                                                              .updateTimeSlot(
+                                                                  index);
+                                                        },
+                                                      );
+                                                    },
+                                                  )
+                                                : Container(
+                                                    height: 60.h,
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.r),
+                                                        color: AppColor
+                                                            .primaryColor
+                                                            .withOpacity(0.08),
+                                                        border: Border.all(
+                                                            color: AppColor
+                                                                .primaryColor)),
+                                                    child: Center(
+                                                        child: Text(
+                                                      "NOT_ACCEPTING_ANY_ORDER"
+                                                          .tr,
+                                                      style: fontRegularBold,
+                                                    )),
+                                                  )
+                                            : const Center(
+                                                child:
+                                                    CircularProgressIndicator())),
+                                ],
+                              ),
+                            ),
+                          ),
 
                           // PaymentMethodSection(),
                           Padding(
@@ -1163,9 +1361,7 @@ Widget cartSummarySection(context) {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8.r)),
                                     child: CachedNetworkImage(
-                                      imageUrl:
-                                          "https://admin.jinahonestop.com" +
-                                              cartController
+                                      imageUrl:cartController
                                                   .cart[index].itemImage!,
                                       imageBuilder: (context, imageProvider) =>
                                           Container(

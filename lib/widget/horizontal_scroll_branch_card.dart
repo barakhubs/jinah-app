@@ -52,7 +52,7 @@ Widget _buildBranchCard(branch, index, context) {
                   topRight: Radius.circular(16.r)),
               child: CachedNetworkImage(
                 imageUrl:
-                    'https://admin.jinahonestop.com' + branch[index].cover!,
+                    branch[index].cover!,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
