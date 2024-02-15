@@ -56,4 +56,6 @@ class APIList {
   static String? pages = "${baseUrl!}/api/frontend/page";
   static String? language = "${baseUrl!}/api/frontend/language";
   static String? deleteAccount = "${baseUrl!}/api/auth/delete-account";
+  static String? changePhoneNumber = "${baseUrl!}/api/frontend/change-phone-number/";
+  static String? verifyChangePhoneNumberOTP = "${baseUrl!}/api/frontend/change-phone-number/code/";
 }

@@ -1,9 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:jinahfoods/app/modules/profile/widget/change_phone_number.dart';
 import '../../../../util/constant.dart';
 import '../../../../util/style.dart';
 import '../../../../widget/loader.dart';
@@ -23,6 +22,10 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     SplashController splashController = Get.put(SplashController());
+    ProfileController profileController = Get.find<ProfileController>();
+    TextEditingController mobileEditingController =
+        TextEditingController(text: profileController.mobileController.text);
+
     return GetBuilder<ProfileController>(
       builder: (profileController) => Stack(
         children: [
@@ -164,6 +167,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             height: 4.h,
                           ),
                           TextFormField(
+                            enabled: false,
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.text,
                             controller: profileController.emailController,
@@ -205,116 +209,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                           SizedBox(
                             height: 16.h,
                           ),
-                          Text(
-                            'MOBILE_NUMBER'.tr,
-                            style: fontProfileLite,
-                          ),
-                          SizedBox(
-                            height: 4.h,
-                          ),
-                          SizedBox(
-                            height: 56.h,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 100.w,
-                                  height: 56.h,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      border: Border.all(
-                                          color: AppColor.dividerColor)),
-                                  child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(splashController
-                                            .countryInfoData.flagEmoji!),
-                                        SizedBox(
-                                          width: 6.w,
-                                        ),
-                                        Text(splashController
-                                            .countryInfoData.callingCode!),
-                                      ]),
-                                ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller:
-                                        profileController.mobileController,
-                                    keyboardType: TextInputType.number,
-                                    // validator: (value) => value!.isEmpty
-                                    //     ? 'Please type Mobile Number'
-                                    //     : null,
-                                    decoration: InputDecoration(
-                                      errorBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        borderSide: BorderSide(
-                                          width: 1.w,
-                                          color: AppColor.primaryColor,
-                                        ),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        borderSide: BorderSide(
-                                          width: 1.w,
-                                          color: AppColor.primaryColor,
-                                        ),
-                                      ),
-                                      fillColor: Colors.red,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8.r)),
-                                        borderSide: BorderSide(
-                                            color: AppColor.primaryColor,
-                                            width: 1.w),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        borderSide: BorderSide(
-                                            width: 1.w,
-                                            color: AppColor.dividerColor),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // SizedBox(
-                              //   width: 156.w,
-                              //   child: ElevatedButton(
-                              //     onPressed: () {},
-                              //     style: ElevatedButton.styleFrom(
-                              //       backgroundColor: AppColor.deleteBtnColor,
-                              //       minimumSize: Size(156.w, 48.h),
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(24.r),
-                              //       ),
-                              //     ),
-                              //     child: Text(
-                              //       "DELETE_ACCOUNT".tr,
-                              //       maxLines: 2,
-                              //       style: fontMedium,
-                              //     ),
-                              //   ),
-                              // ),
-                              // SizedBox(
-                              //   width: 16.w,
-                              // ),
                               SizedBox(
                                 width: Get.width - 50,
                                 child: ElevatedButton(
@@ -341,6 +239,40 @@ class _EditProfileViewState extends State<EditProfileView> {
                           ),
                           SizedBox(
                             height: 20.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: Get.width - 50,
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    Get.to(ChangePhoneNumberView());
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    minimumSize: Size(156.w, 48.h),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24.r),
+                                      side: BorderSide(
+                                        color: AppColor.primaryColor,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "CHANGE PHONE  NUMBER",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: AppColor.primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

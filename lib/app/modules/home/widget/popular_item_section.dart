@@ -18,7 +18,7 @@ Widget popularItemSection() {
               SizedBox(
                 height: 24.h,
                 child: Text(
-                  "Recommended Dishes",
+                  "Recommended",
                   style: fontBold,
                 ),
               ),

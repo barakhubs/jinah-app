@@ -7,6 +7,9 @@ import 'package:jinahfoods/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jinahfoods/app/modules/home/views/home_view.dart';
+import 'package:jinahfoods/app/modules/profile/views/profile_view.dart';
+import 'package:jinahfoods/app/modules/profile/widget/otp_verify_change_phone_number_view.dart';
 import '../../../../util/api-list.dart';
 import '../../../../util/constant.dart';
 import '../../../../widget/custom_snackbar.dart';
@@ -157,6 +160,63 @@ class ProfileController extends GetxController {
       }
     });
   }
+
+  Future phoneNumberChange(phoneNumber) async {
+    loader = true;
+    update();
+    try {
+      server
+          .getRequest(
+              endPoint: APIList.changePhoneNumber! + phoneNumber.toString())
+          .then((response) {
+        if (response != null && response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body);
+          if (box.read("otpVarify") == 5) {
+            Get.off(VerifyChangePhoneNumberOtpView(
+              phoneNumber: phoneNumber,
+            ));
+          }
+          loader = false;
+          update();
+        } else {
+          final jsonResponse = json.decode(response.body);
+          customSnackbar(
+              "ERROR".tr, jsonResponse["message"].toString(), AppColor.error);
+          loader = false;
+          update();
+        }
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<bool> otpVerify(String code) async {
+  try {
+    final response = await server.getRequest(
+      endPoint: APIList.verifyChangePhoneNumberOTP! + code.toString(),
+    );
+    if (response != null && response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['success']) {
+        customSnackbar("Success", jsonResponse['message'], AppColor.success);
+        return true; // OTP verification successful
+      } else {
+        customSnackbar("Error", jsonResponse['message'], AppColor.error);
+        return false; // OTP verification failed
+      }
+    } else {
+      customSnackbar("Error", "Failed to verify OTP", AppColor.error);
+      return false; // HTTP request failed
+    }
+  } catch (e) {
+    debugPrint("Exception: $e");
+    customSnackbar("Error", "An error occurred", AppColor.error);
+    return false; // Exception occurred
+  }
+}
+
+
 
   Future getImageFromGallary() async {
     final ImagePicker _picker = ImagePicker();

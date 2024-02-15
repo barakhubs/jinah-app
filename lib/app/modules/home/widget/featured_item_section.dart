@@ -18,7 +18,7 @@ Widget featureditemSection() {
               SizedBox(
                 height: 24.h,
                 child: Text(
-                  "Recommended Items",
+                  "Recommended",
                   style: fontBold,
                 ),
               ),

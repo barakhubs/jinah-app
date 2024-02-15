@@ -37,32 +37,33 @@ class _ProfileViewState extends State<ProfileView> {
   bool? isLogedIn;
 
   @override
-  void initState() {
-    Get.put(SplashController());
-    ProfileController profileController = Get.put(ProfileController());
-    super.initState();
-    bool isLogedIn = box.read('isLogedIn');
-    if (isLogedIn) {
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    bool isLoggedIn = box.read('isLogedIn') ?? false;
+    if (isLoggedIn) {
+      final ProfileController profileController = Get.find<ProfileController>();
       profileController.getProfileData();
     }
-  }
+  });
+}
 
 // Function to remove OneSignal Player ID
-Future<void> removeOneSignalPlayerID() async {
-  try {
-    // Get the current OneSignal user ID
-    OSDeviceState? deviceState = await OneSignal.shared.getDeviceState();
-    String? playerId = deviceState?.userId;
+  Future<void> removeOneSignalPlayerID() async {
+    try {
+      // Get the current OneSignal user ID
+      OSDeviceState? deviceState = await OneSignal.shared.getDeviceState();
+      String? playerId = deviceState?.userId;
 
-    // Remove the OneSignal Player ID
-    await OneSignal.shared.removeExternalUserId();
-    
-    // Print a message or perform additional cleanup if needed
-    print('OneSignal Player ID removed: $playerId');
-  } catch (e) {
-    print('Error removing OneSignal Player ID: $e');
+      // Remove the OneSignal Player ID
+      await OneSignal.shared.removeExternalUserId();
+
+      // Print a message or perform additional cleanup if needed
+      print('OneSignal Player ID removed: $playerId');
+    } catch (e) {
+      print('Error removing OneSignal Player ID: $e');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +267,8 @@ Future<void> removeOneSignalPlayerID() async {
                                           Text(
                                             Get.find<SplashController>()
                                                     .configData
-                                                    .siteDefaultCurrencySymbol! +" "+
+                                                    .siteDefaultCurrencySymbol! +
+                                                " " +
                                                 profileController
                                                     .profileData.balance
                                                     .toString(),
@@ -356,8 +358,7 @@ Future<void> removeOneSignalPlayerID() async {
                           profileItem(const ProfileAddressView(),
                               Images.address, "ADDRESS".tr),
                         if (box.read('isLogedIn') == true)
-                          profileItem(ChatView(),
-                              Images.chat, "Chat"),
+                          profileItem(ChatView(), Images.chat, "Chat"),
                         if (box.read('isLogedIn') == true)
                           profileItem(ChangePasswordView(), Images.change_pass,
                               "CHANGE_PASSWORD".tr),
@@ -392,7 +393,7 @@ Future<void> removeOneSignalPlayerID() async {
                             onTap: () async {
                               // Remove OneSignal Player ID
                               // await removeOneSignalPlayerID();
-                              
+
                               box.write('isLogedIn', false);
                               (context as Element).markNeedsBuild();
                               Get.offAll(() => const DashboardView());

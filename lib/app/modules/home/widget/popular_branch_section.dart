@@ -19,7 +19,7 @@ Widget popularBranchSection() {
               SizedBox(
                 height: 24.h, 
                 child: Text(
-                  "Most Popular Restaurants",
+                  "Most Popular Vendors",
                   style: fontBold,
                 ),
               ),

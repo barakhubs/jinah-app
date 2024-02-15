@@ -70,7 +70,7 @@ Map<String, String> english = {
   'BRANCH': 'Branch',
   'SEARCH': 'Search',
   'VIEW_ALL': 'View All',
-  'OUR_MENU': 'Dish Categories',
+  'OUR_MENU': 'Categories',
   'NEW_ITEMS': 'New Items',
   'FEATURED_ITEMS': 'Featured Items',
   'FROM': 'From',

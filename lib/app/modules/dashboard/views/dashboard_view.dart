@@ -154,7 +154,7 @@ class _DashboardScreenState extends State<DashboardView> {
                 isSelected: pageIndex == 0,
                 onTap: () => _setPage(0)),
             BottomNavItem(
-                tittle: "Restaurants",
+                tittle: "Vendors",
                 imageData: AssetImage(Images.menu),
                 isSelected: pageIndex == 1,
                 onTap: () => _setPage(1)),
