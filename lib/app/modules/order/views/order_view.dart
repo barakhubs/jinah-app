@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jinahfoods/app/modules/auth/views/login_view.dart';
+import 'package:jinahfoods/app/modules/cart/controllers/cart_controller.dart';
+import 'package:jinahfoods/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../util/constant.dart';
@@ -26,6 +28,7 @@ class _OrderViewState extends State<OrderView> {
   void initState() {
     Get.put(OrderController());
     Get.find<OrderController>().getMyOrderList();
+    
     super.initState();
   }
 
@@ -34,67 +37,69 @@ class _OrderViewState extends State<OrderView> {
   bool? isLogedIn;
 
   @override
-  Widget build(BuildContext context) {
-    return GetBuilder<OrderController>(
-      builder: (orderController) => Stack(
-        children: [
-          Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              title: Text(
-                'My Orders',
-                style: fontBoldWithColorBlack,
-              ),
-              centerTitle: true,
-              elevation: 0,
-              backgroundColor: Colors.white,
+Widget build(BuildContext context) {
+  return GetBuilder<OrderController>(
+    builder: (orderController) => Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: Text(
+              'My Orders',
+              style: fontBoldWithColorBlack,
             ),
-            body: RefreshIndicator(
-              color: AppColor.primaryColor,
-              onRefresh: () async {
-                orderController.getMyOrderList();
-              },
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: box.read('isLogedIn') == true
-                      ? [
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          orderController.loader
-                              ? activeOrderSectionShimmer()
-                              : activeOrderSection(),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          orderController.loader
-                              ? previousOrdersShimmer()
-                              : previousOrders(),
-                        ]
-                      : [notLogged()],
-                ),
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: Colors.white,
+          ),
+          body: RefreshIndicator(
+            color: AppColor.primaryColor,
+            onRefresh: () async {
+              orderController.getMyOrderList();
+            },
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: box.read('isLogedIn') == true
+                    ? [
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        orderController.loader
+                            ? activeOrderSectionShimmer()
+                            : activeOrderSection(),
+                        SizedBox(
+                          height: 24.h,
+                        ),
+                        orderController.loader
+                            ? previousOrdersShimmer()
+                            : previousOrders(),
+                      ]
+                    : [notLogged()],
               ),
             ),
           ),
-          orderController.orderDetailsLoader
-              ? Positioned(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.white60,
-                    child: const Center(
-                      child: LoaderCircle(),
-                    ),
+        ),
+        orderController.orderDetailsLoader
+            ? Positioned(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white60,
+                  child: const Center(
+                    child: LoaderCircle(),
                   ),
-                )
-              : const SizedBox.shrink(),
-        ],
-      ),
-    );
-  }
+                ),
+              )
+            : const SizedBox.shrink(),
+      ],
+    ),
+  );
+}
+
+
 }
 
 Widget notLogged() {

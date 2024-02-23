@@ -53,7 +53,7 @@ android {
         applicationId "com.jinahonestop.jinah"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 3
+        versionCode 4
         versionName flutterVersionName
     }
     signingConfigs {

@@ -357,8 +357,8 @@ void initState() {
                         if (box.read('isLogedIn') == true)
                           profileItem(const ProfileAddressView(),
                               Images.address, "ADDRESS".tr),
-                        if (box.read('isLogedIn') == true)
-                          profileItem(ChatView(), Images.chat, "Chat"),
+                        // if (box.read('isLogedIn') == true)
+                        //   profileItem(ChatView(), Images.chat, "Chat"),
                         if (box.read('isLogedIn') == true)
                           profileItem(ChangePasswordView(), Images.change_pass,
                               "CHANGE_PASSWORD".tr),

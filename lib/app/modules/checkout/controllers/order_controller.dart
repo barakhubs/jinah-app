@@ -45,11 +45,13 @@ class PlaceOrderController extends GetxController {
         .postRequestWithToken(endPoint: APIList.order, body: jsonBody)
         .then((response) {
       if (response != null && response.statusCode == 201) {
+        
         loader = false;
         update();
         Get.to(() => OrderView());
         Get.find<CartController>().cart.clear();
         final jsonResponse = json.decode(response.body);
+        customSnackbar("SUCCESS".tr, jsonResponse["message"], AppColor.success);
         orderDetailsModel = OrderDetailsModel.fromJson(jsonResponse);
         orderDetailsData = orderDetailsModel.data!;
         Get.find<HomeController>().getActiveOrderList();

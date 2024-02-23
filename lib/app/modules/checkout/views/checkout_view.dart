@@ -574,202 +574,202 @@ class _CheckoutViewState extends State<CheckoutView> {
                             ),
 
                             //preference time to delivery
-                          GetBuilder<CheckoutController>(
-                            builder: (checkoutController) => Padding(
-                              padding: EdgeInsets.only(
-                                  left: 16.w, bottom: 24.w, right: 8.w),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 8.w),
-                                        child: Text(
-                                          "PREFERENCE_TIME_TO_DELIVERY".tr,
-                                          style: fontMedium,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 12.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 40.h,
-                                        child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            shrinkWrap: true,
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            itemCount: 2,
-                                            itemBuilder: (context, index) {
-                                              return TimeSlotWidget(
-                                                title: index == 0
-                                                    ? 'TODAY'.tr
-                                                    : 'TOMORROW'.tr,
-                                                isSelected: checkoutController
-                                                        .selectDateSlot ==
-                                                    index,
-                                                onTap: () {
-                                                  checkoutController
-                                                      .updateDateSlot(index);
-                                                },
-                                              );
-                                            }),
-                                      ),
-                                      SizedBox(
-                                        width: 12.w,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  if (checkoutController.selectDateSlot == 0)
-                                    Container(
-                                        alignment: Alignment.centerLeft,
-                                        height: 40.h,
-                                        child: checkoutController
-                                                    .todayDataList !=
-                                                null
-                                            ? checkoutController
-                                                    .todayDataList.isNotEmpty
-                                                ? ListView.builder(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    shrinkWrap: true,
-                                                    physics:
-                                                        const BouncingScrollPhysics(),
-                                                    itemCount:
-                                                        checkoutController
-                                                            .todayDataList
-                                                            .length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return TimeSlotWidget(
-                                                        title: (index == 0 &&
-                                                                checkoutController
-                                                                        .selectDateSlot ==
-                                                                    0
-                                                            ? 'NOW'.tr
-                                                            : checkoutController
-                                                                .todayDataList[
-                                                                    index]
-                                                                .label!),
-                                                        isSelected:
-                                                            checkoutController
-                                                                    .selectTimeSlot ==
-                                                                index,
-                                                        onTap: () {
-                                                          selectedDate =
-                                                              checkoutController
-                                                                  .todayDataList[
-                                                                      index]
-                                                                  .time!;
-                                                          isAdvanceOrder = 10;
-                                                          checkoutController
-                                                              .updateTimeSlot(
-                                                                  index);
-                                                        },
-                                                      );
-                                                    },
-                                                  )
-                                                : Container(
-                                                    height: 60.h,
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.r),
-                                                        color: AppColor
-                                                            .primaryColor
-                                                            .withOpacity(0.08),
-                                                        border: Border.all(
-                                                            color: AppColor
-                                                                .primaryColor)),
-                                                    child: Center(
-                                                        child: Text(
-                                                      "CURRENTLY_NOT_ACCEPTING_ANY_ORDER"
-                                                          .tr,
-                                                      style: fontRegularBold,
-                                                    )),
-                                                  )
-                                            : const Center(
-                                                child:
-                                                    CircularProgressIndicator())),
-                                  if (checkoutController.selectDateSlot == 1)
-                                    Container(
-                                        alignment: Alignment.centerLeft,
-                                        height: 40.h,
-                                        child: checkoutController
-                                                    .tomorrowDataList !=
-                                                null
-                                            ? checkoutController
-                                                    .tomorrowDataList.isNotEmpty
-                                                ? ListView.builder(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    shrinkWrap: true,
-                                                    physics:
-                                                        const BouncingScrollPhysics(),
-                                                    itemCount:
-                                                        checkoutController
-                                                            .tomorrowDataList
-                                                            .length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return TimeSlotWidget(
-                                                        title: checkoutController
-                                                            .tomorrowDataList[
-                                                                index]
-                                                            .label!,
-                                                        isSelected:
-                                                            checkoutController
-                                                                    .selectTimeSlot ==
-                                                                index,
-                                                        onTap: () {
-                                                          selectedDate =
-                                                              checkoutController
-                                                                  .tomorrowDataList[
-                                                                      index]
-                                                                  .time!;
-                                                          isAdvanceOrder = 5;
-                                                          checkoutController
-                                                              .updateTimeSlot(
-                                                                  index);
-                                                        },
-                                                      );
-                                                    },
-                                                  )
-                                                : Container(
-                                                    height: 60.h,
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.r),
-                                                        color: AppColor
-                                                            .primaryColor
-                                                            .withOpacity(0.08),
-                                                        border: Border.all(
-                                                            color: AppColor
-                                                                .primaryColor)),
-                                                    child: Center(
-                                                        child: Text(
-                                                      "NOT_ACCEPTING_ANY_ORDER"
-                                                          .tr,
-                                                      style: fontRegularBold,
-                                                    )),
-                                                  )
-                                            : const Center(
-                                                child:
-                                                    CircularProgressIndicator())),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // GetBuilder<CheckoutController>(
+                          //   builder: (checkoutController) => Padding(
+                          //     padding: EdgeInsets.only(
+                          //         left: 16.w, bottom: 24.w, right: 8.w),
+                          //     child: Column(
+                          //       children: [
+                          //         Row(
+                          //           children: [
+                          //             Padding(
+                          //               padding: EdgeInsets.only(right: 8.w),
+                          //               child: Text(
+                          //                 "PREFERENCE_TIME_TO_DELIVERY".tr,
+                          //                 style: fontMedium,
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         SizedBox(
+                          //           height: 12.h,
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             SizedBox(
+                          //               height: 40.h,
+                          //               child: ListView.builder(
+                          //                   scrollDirection: Axis.horizontal,
+                          //                   shrinkWrap: true,
+                          //                   physics:
+                          //                       const BouncingScrollPhysics(),
+                          //                   itemCount: 2,
+                          //                   itemBuilder: (context, index) {
+                          //                     return TimeSlotWidget(
+                          //                       title: index == 0
+                          //                           ? 'TODAY'.tr
+                          //                           : 'TOMORROW'.tr,
+                          //                       isSelected: checkoutController
+                          //                               .selectDateSlot ==
+                          //                           index,
+                          //                       onTap: () {
+                          //                         checkoutController
+                          //                             .updateDateSlot(index);
+                          //                       },
+                          //                     );
+                          //                   }),
+                          //             ),
+                          //             SizedBox(
+                          //               width: 12.w,
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         SizedBox(
+                          //           height: 8.h,
+                          //         ),
+                          //         if (checkoutController.selectDateSlot == 0)
+                          //           Container(
+                          //               alignment: Alignment.centerLeft,
+                          //               height: 40.h,
+                          //               child: checkoutController
+                          //                           .todayDataList !=
+                          //                       null
+                          //                   ? checkoutController
+                          //                           .todayDataList.isNotEmpty
+                          //                       ? ListView.builder(
+                          //                           scrollDirection:
+                          //                               Axis.horizontal,
+                          //                           shrinkWrap: true,
+                          //                           physics:
+                          //                               const BouncingScrollPhysics(),
+                          //                           itemCount:
+                          //                               checkoutController
+                          //                                   .todayDataList
+                          //                                   .length,
+                          //                           itemBuilder:
+                          //                               (context, index) {
+                          //                             return TimeSlotWidget(
+                          //                               title: (index == 0 &&
+                          //                                       checkoutController
+                          //                                               .selectDateSlot ==
+                          //                                           0
+                          //                                   ? 'NOW'.tr
+                          //                                   : checkoutController
+                          //                                       .todayDataList[
+                          //                                           index]
+                          //                                       .label!),
+                          //                               isSelected:
+                          //                                   checkoutController
+                          //                                           .selectTimeSlot ==
+                          //                                       index,
+                          //                               onTap: () {
+                          //                                 selectedDate =
+                          //                                     checkoutController
+                          //                                         .todayDataList[
+                          //                                             index]
+                          //                                         .time!;
+                          //                                 isAdvanceOrder = 10;
+                          //                                 checkoutController
+                          //                                     .updateTimeSlot(
+                          //                                         index);
+                          //                               },
+                          //                             );
+                          //                           },
+                          //                         )
+                          //                       : Container(
+                          //                           height: 60.h,
+                          //                           width: double.infinity,
+                          //                           decoration: BoxDecoration(
+                          //                               borderRadius:
+                          //                                   BorderRadius
+                          //                                       .circular(8.r),
+                          //                               color: AppColor
+                          //                                   .primaryColor
+                          //                                   .withOpacity(0.08),
+                          //                               border: Border.all(
+                          //                                   color: AppColor
+                          //                                       .primaryColor)),
+                          //                           child: Center(
+                          //                               child: Text(
+                          //                             "CURRENTLY_NOT_ACCEPTING_ANY_ORDER"
+                          //                                 .tr,
+                          //                             style: fontRegularBold,
+                          //                           )),
+                          //                         )
+                          //                   : const Center(
+                          //                       child:
+                          //                           CircularProgressIndicator())),
+                          //         if (checkoutController.selectDateSlot == 1)
+                          //           Container(
+                          //               alignment: Alignment.centerLeft,
+                          //               height: 40.h,
+                          //               child: checkoutController
+                          //                           .tomorrowDataList !=
+                          //                       null
+                          //                   ? checkoutController
+                          //                           .tomorrowDataList.isNotEmpty
+                          //                       ? ListView.builder(
+                          //                           scrollDirection:
+                          //                               Axis.horizontal,
+                          //                           shrinkWrap: true,
+                          //                           physics:
+                          //                               const BouncingScrollPhysics(),
+                          //                           itemCount:
+                          //                               checkoutController
+                          //                                   .tomorrowDataList
+                          //                                   .length,
+                          //                           itemBuilder:
+                          //                               (context, index) {
+                          //                             return TimeSlotWidget(
+                          //                               title: checkoutController
+                          //                                   .tomorrowDataList[
+                          //                                       index]
+                          //                                   .label!,
+                          //                               isSelected:
+                          //                                   checkoutController
+                          //                                           .selectTimeSlot ==
+                          //                                       index,
+                          //                               onTap: () {
+                          //                                 selectedDate =
+                          //                                     checkoutController
+                          //                                         .tomorrowDataList[
+                          //                                             index]
+                          //                                         .time!;
+                          //                                 isAdvanceOrder = 5;
+                          //                                 checkoutController
+                          //                                     .updateTimeSlot(
+                          //                                         index);
+                          //                               },
+                          //                             );
+                          //                           },
+                          //                         )
+                          //                       : Container(
+                          //                           height: 60.h,
+                          //                           width: double.infinity,
+                          //                           decoration: BoxDecoration(
+                          //                               borderRadius:
+                          //                                   BorderRadius
+                          //                                       .circular(8.r),
+                          //                               color: AppColor
+                          //                                   .primaryColor
+                          //                                   .withOpacity(0.08),
+                          //                               border: Border.all(
+                          //                                   color: AppColor
+                          //                                       .primaryColor)),
+                          //                           child: Center(
+                          //                               child: Text(
+                          //                             "NOT_ACCEPTING_ANY_ORDER"
+                          //                                 .tr,
+                          //                             style: fontRegularBold,
+                          //                           )),
+                          //                         )
+                          //                   : const Center(
+                          //                       child:
+                          //                           CircularProgressIndicator())),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
 
                           // PaymentMethodSection(),
                           Padding(

@@ -162,7 +162,7 @@ class ProfileController extends GetxController {
   }
 
   Future phoneNumberChange(phoneNumber) async {
-    loader = true;
+    updateProfileLodear = true;
     update();
     try {
       server
@@ -176,14 +176,16 @@ class ProfileController extends GetxController {
               phoneNumber: phoneNumber,
             ));
           }
-          loader = false;
+          
+    updateProfileLodear = false;
           update();
         } else {
           final jsonResponse = json.decode(response.body);
           customSnackbar(
               "ERROR".tr, jsonResponse["message"].toString(), AppColor.error);
-          loader = false;
+          updateProfileLodear = false;
           update();
+
         }
       });
     } catch (e) {
@@ -192,6 +194,7 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> otpVerify(String code) async {
+  updateProfileLodear = true;
   try {
     final response = await server.getRequest(
       endPoint: APIList.verifyChangePhoneNumberOTP! + code.toString(),
@@ -200,18 +203,23 @@ class ProfileController extends GetxController {
       final jsonResponse = json.decode(response.body);
       if (jsonResponse['success']) {
         customSnackbar("Success", jsonResponse['message'], AppColor.success);
+        updateProfileLodear = false;
         return true; // OTP verification successful
       } else {
         customSnackbar("Error", jsonResponse['message'], AppColor.error);
+        updateProfileLodear = false;
         return false; // OTP verification failed
       }
+      
     } else {
       customSnackbar("Error", "Failed to verify OTP", AppColor.error);
+      updateProfileLodear = false;
       return false; // HTTP request failed
     }
   } catch (e) {
     debugPrint("Exception: $e");
     customSnackbar("Error", "An error occurred", AppColor.error);
+    updateProfileLodear = false;
     return false; // Exception occurred
   }
 }

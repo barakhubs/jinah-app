@@ -19,7 +19,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     //for foreground state
     Timer(
-      const Duration(seconds: 2),
+      const Duration(seconds: 3),
       () {
         Get.offAll(() => const DashboardView());
       },

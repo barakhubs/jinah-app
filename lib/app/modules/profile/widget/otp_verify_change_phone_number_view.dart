@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:jinahfoods/app/modules/auth/controllers/auth_controller.dart';
 import 'package:jinahfoods/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:jinahfoods/app/modules/profile/controllers/profile_controller.dart';
+import 'package:jinahfoods/app/modules/profile/views/profile_view.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../util/constant.dart';
@@ -104,16 +105,21 @@ class _VerifyChangePhoneNumberOtpViewState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Center the row contents horizontally
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .center, // Center the row contents vertically
                                 children: [
                                   Text(
                                     'ENTER_THE_CODE_SENT_TO'.tr,
                                     style: fontRegular,
                                   ),
+                                  SizedBox(
+                                      width:
+                                          8), // Add some spacing between the texts for better readability
                                   Text(
-                                    widget.phoneNumber.toString(),
+                                    '+256 ' + widget.phoneNumber.toString(),
                                     style: fontMediumPro,
                                   ),
                                 ],
@@ -123,24 +129,24 @@ class _VerifyChangePhoneNumberOtpViewState
                               ),
                               Center(
                                 child: Pinput(
-                                  length: int.parse(box.read("otpLength")),
-                                  defaultPinTheme: defaultPinTheme,
-                                  focusedPinTheme: focusedPinTheme,
-                                  submittedPinTheme: submittedPinTheme,
-                                  pinputAutovalidateMode:
-                                      PinputAutovalidateMode.onSubmit,
-                                  showCursor: true,
-                                  onCompleted: (pin) async {
-                                      bool isVerified = await profileController.otpVerify(pin);
+                                    length: int.parse(box.read("otpLength")),
+                                    defaultPinTheme: defaultPinTheme,
+                                    focusedPinTheme: focusedPinTheme,
+                                    submittedPinTheme: submittedPinTheme,
+                                    pinputAutovalidateMode:
+                                        PinputAutovalidateMode.onSubmit,
+                                    showCursor: true,
+                                    onCompleted: (pin) async {
+                                      bool isVerified = await profileController
+                                          .otpVerify(pin);
                                       if (isVerified) {
                                         // OTP verification successful, navigate to another screen
-                                        Get.to(DashboardView());
+                                        Get.to(ProfileView());
                                       } else {
                                         // OTP verification failed, display an error message
                                         // You may choose to display an error message to the user here
                                       }
-                                    }
-                                ),
+                                    }),
                               ),
                               SizedBox(
                                 height: 15.h,
