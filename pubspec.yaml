@@ -1,5 +1,5 @@
 name: jinahfoods
-version: 2.0.3
+version: 2.0.7
 publish_to: none
 description: Fast and Affordable Food Delivery
 environment: 
@@ -55,6 +55,7 @@ dependencies:
 
   flutter: 
     sdk: flutter
+  in_app_update: ^4.2.2
 
 
 dev_dependencies: 

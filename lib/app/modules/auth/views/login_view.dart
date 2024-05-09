@@ -368,70 +368,70 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 16.h, left: 16.w, right: 16.w),
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            width: double.infinity,
-                            child: Text(
-                              'OR'.tr,
-                              style: TextStyle(
-                                  color: AppColor.textSignupColor,
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Rubik'),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 12.h,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.to(
-                                          () => PhoneNumberView(isGuest: true));
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      backgroundColor: Colors.white,
-                                      minimumSize: Size(290.w, 52.h),
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          width: 1.w,
-                                          color: AppColor.primaryColor,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(26.r),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      "LOGIN_AS_GUEST".tr,
-                                      style: TextStyle(
-                                        color: AppColor.primaryColor,
-                                        fontFamily: 'Rubik',
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 24.h,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //       bottom: 16.h, left: 16.w, right: 16.w),
+                    //   child: Column(
+                    //     children: [
+                    //       Container(
+                    //         alignment: Alignment.center,
+                    //         width: double.infinity,
+                    //         child: Text(
+                    //           'OR'.tr,
+                    //           style: TextStyle(
+                    //               color: AppColor.textSignupColor,
+                    //               fontSize: 14.sp,
+                    //               fontFamily: 'Rubik'),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         height: 12.h,
+                    //       ),
+                    //       Column(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: [
+                    //           Row(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             crossAxisAlignment: CrossAxisAlignment.center,
+                    //             children: [
+                    //               ElevatedButton(
+                    //                 onPressed: () {
+                    //                   Get.to(
+                    //                       () => PhoneNumberView(isGuest: true));
+                    //                 },
+                    //                 style: ElevatedButton.styleFrom(
+                    //                   elevation: 0,
+                    //                   backgroundColor: Colors.white,
+                    //                   minimumSize: Size(290.w, 52.h),
+                    //                   shape: RoundedRectangleBorder(
+                    //                     side: BorderSide(
+                    //                       width: 1.w,
+                    //                       color: AppColor.primaryColor,
+                    //                     ),
+                    //                     borderRadius:
+                    //                         BorderRadius.circular(26.r),
+                    //                   ),
+                    //                 ),
+                    //                 child: Text(
+                    //                   "LOGIN_AS_GUEST".tr,
+                    //                   style: TextStyle(
+                    //                     color: AppColor.primaryColor,
+                    //                     fontFamily: 'Rubik',
+                    //                     fontSize: 16.sp,
+                    //                     fontWeight: FontWeight.w500,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //           SizedBox(
+                    //             height: 24.h,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

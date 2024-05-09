@@ -1268,12 +1268,12 @@ class _ItemViewState extends State<ItemView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (cartController.itemQuantity == 0) {
                               customTast("PLEASE_INCREASE_QUANTITY".tr,
                                   AppColor.error);
                             } else {
-                              bool success = cartController.addItem(
+                              bool success = await cartController.addItem(
                                 widget.itemDetails!,
                                 extraList,
                                 variationList,

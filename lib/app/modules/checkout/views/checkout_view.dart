@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jinahfoods/app/modules/order/views/order_view.dart';
+import 'package:jinahfoods/util/api-list.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -60,12 +61,14 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   bool maploading = true;
 
+  bool isOrdering = false;
+
   // double branchLat = 3.020505748699635;
   // double branchLong = 30.91136695179617;
   double branchLat = 0.0;
   double branchLong = 0.0;
-  double addressLat = 0.0;
-  double addressLon = 0.0;
+  double addressLat = 3.020510;
+  double addressLon = 30.911334;
 
   bool isActive = true;
   String selectedDate = '';
@@ -100,19 +103,24 @@ class _CheckoutViewState extends State<CheckoutView> {
 
     if (homeController.branchDataList.isNotEmpty) {
       branchLat = double.parse(homeController
-          .branchDataList[homeController.findBranchIndexById(homeController.selectedbranchId!)].latitude
+          .branchDataList[homeController
+              .findBranchIndexById(homeController.selectedbranchId!)]
+          .latitude
           .toString());
       branchLong = double.parse(homeController
-          .branchDataList[homeController.findBranchIndexById(homeController.selectedbranchId!)].longitude
+          .branchDataList[homeController
+              .findBranchIndexById(homeController.selectedbranchId!)]
+          .longitude
           .toString());
     }
 
     cartController.calculateDistance(
         addressLat, addressLon, branchLat, branchLong);
-    if (checkoutController.todayDataList.isNotEmpty) {
-      selectedDate = checkoutController.todayDataList[0].time!;
-      isAdvanceOrder = 10;
-    }
+
+    // if (checkoutController.todayDataList.isNotEmpty) {
+    //   selectedDate = checkoutController.todayDataList[0].time!;
+    //   isAdvanceOrder = 10;
+    // }
 
     if (splashController.configData.orderSetupDelivery == 10 &&
         splashController.configData.orderSetupTakeaway == 5) {
@@ -130,6 +138,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     AddressController addressController = Get.put(AddressController());
     HomeController homeController = Get.put(HomeController());
     SplashController splashController = Get.put(SplashController());
+    CheckoutController checkoutController = Get.put(CheckoutController());
 
     return GetBuilder<PlaceOrderController>(
       builder: (placeOrderController) => Stack(
@@ -161,7 +170,6 @@ class _CheckoutViewState extends State<CheckoutView> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-
                           // delivaryAddressSection(context),
                           if (cartController.orderTypeIndex == 0)
                             GetBuilder<AddressController>(
@@ -573,7 +581,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               ),
                             ),
 
-                            //preference time to delivery
+                          //preference time to delivery
                           // GetBuilder<CheckoutController>(
                           //   builder: (checkoutController) => Padding(
                           //     padding: EdgeInsets.only(
@@ -920,70 +928,180 @@ class _CheckoutViewState extends State<CheckoutView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
-                                onPressed: () async {
-                                  setState(() {
-                                    if (splashController.configData
-                                                .orderSetupDelivery ==
-                                            10 &&
-                                        splashController.configData
-                                                .orderSetupTakeaway ==
-                                            10) {
-                                      customTast(
-                                          "CURRENTLY_NOT_ACCEPTING_ANY_ORDER"
-                                              .tr,
-                                          AppColor.error);
-                                    } else if (addressController
-                                            .addressDataList.isEmpty &&
-                                        cartController.orderTypeIndex == 0) {
-                                      customTast(
-                                          "PLEASE_ADD_DELIVERY_ADDRESS".tr,
-                                          AppColor.error);
-                                    } else if (addressController
-                                                .selectedAddress ==
-                                            null &&
-                                        cartController.orderTypeIndex == 0) {
-                                      customTast("PLEASE_CHOOSE_AN_ADDRESS".tr,
-                                          AppColor.error);
-                                    }else if (cartController.kilometer >= 9.5) {
-                                      customTast("Oops! We're currently unavailable in this area.",
-                                          AppColor.error);
-                                    } else {
-                                      placeOrderController.placeOrderPost(
-                                          PlaceOrderBody(
-                                            branchId:
-                                                homeController.selectedbranchId,
-                                            orderType:
+                                // onPressed: () async {
+                                //   setState(() async {
+                                //     print(checkoutController.todayDataList);
+                                //     print(APIList.todayTimeSlot!+homeController.selectedbranchId.toString());
+                                //     if (splashController.configData
+                                //                 .orderSetupDelivery ==
+                                //             10 &&
+                                //         splashController.configData
+                                //                 .orderSetupTakeaway ==
+                                //             10) {
+                                //       customTast(
+                                //           "CURRENTLY_NOT_ACCEPTING_ANY_ORDER"
+                                //               .tr,
+                                //           AppColor.error);
+                                //     } if (!await checkoutController.isCurrentTimeInSelectedSlot()) {
+                                //       customTast(
+                                //           "It seems you are placing an order outside our delivery time!",
+                                //           AppColor.error);
+                                //     } else if (addressController
+                                //             .addressDataList.isEmpty &&
+                                //         cartController.orderTypeIndex == 0) {
+                                //       customTast(
+                                //           "PLEASE_ADD_DELIVERY_ADDRESS".tr,
+                                //           AppColor.error);
+                                //     } else if (addressController
+                                //                 .selectedAddress ==
+                                //             null &&
+                                //         cartController.orderTypeIndex == 0) {
+                                //       customTast("PLEASE_CHOOSE_AN_ADDRESS".tr,
+                                //           AppColor.error);
+                                //     }else if (cartController.kilometer >= 9.5) {
+                                //       customTast("Oops! We're currently unavailable in this area.",
+                                //           AppColor.error);
+                                //     } else {
+                                //       placeOrderController.placeOrderPost(
+                                //           PlaceOrderBody(
+                                //             branchId:
+                                //                 homeController.selectedbranchId,
+                                //             orderType:
+                                //                 cartController.orderTypeIndex ==
+                                //                         0
+                                //                     ? 5
+                                //                     : 10,
+                                //             isAdvanceOrder: isAdvanceOrder,
+                                //             deliveryCharge:
+                                //                 cartController.deliveryCharge,
+                                //             distance: cartController.kilometer,
+                                //             addressId: cartController
+                                //                         .orderTypeIndex ==
+                                //                     0
+                                //                 ? addressController
+                                //                     .addressDataList[
+                                //                         addressController
+                                //                             .selectedAddress!]
+                                //                     .id
+                                //                 : null,
+                                //             deliveryTime: '00:00',
+                                //             subtotal:
+                                //                 cartController.totalCartValue,
+                                //             total: cartController.total,
+                                //             couponId: cartController.couponId,
+                                //             discount:
+                                //                 cartController.couponDiscount,
+                                //             source: 10,
+                                //             items: cartController.cart,
+                                //           ),
+                                //           callback);
+                                //     }
+                                //   });
+                                // },
+                                onPressed: isOrdering
+                                    ? null
+                                    : () async {
+                                        setState(() {
+                                          isOrdering =
+                                              true; // Start the ordering process
+                                        });
+                                        print(homeController.selectedbranchId);
+                                        // Perform the async operation before calling setState.
+                                        bool isOrderCurrentlyAccepted =
+                                            splashController.configData
+                                                        .orderSetupDelivery ==
+                                                    10 &&
+                                                splashController.configData
+                                                        .orderSetupTakeaway ==
+                                                    10;
+                                        bool isWithinDeliveryTime =
+                                            await checkoutController
+                                                .isCurrentTimeInSelectedSlot();
+                                        bool isAddressListEmpty =
+                                            addressController
+                                                    .addressDataList.isEmpty &&
                                                 cartController.orderTypeIndex ==
+                                                    0;
+                                        bool isSelectedAddressNull =
+                                            addressController.selectedAddress ==
+                                                    null &&
+                                                cartController.orderTypeIndex ==
+                                                    0;
+                                        bool isOutOfArea =
+                                            cartController.kilometer >= 9.5;
+
+                                        // Now, you can use this information to decide what to do next.
+                                        if (isOrderCurrentlyAccepted) {
+                                          customTast(
+                                              "CURRENTLY_NOT_ACCEPTING_ANY_ORDER"
+                                                  .tr,
+                                              AppColor.error);
+                                        } else if (!isWithinDeliveryTime) {
+                                          customTast(
+                                              "Sorry! ${homeController.selectedBranch ?? 'the selected branch'} can't take orders at this time. Try another vendor.",
+                                              AppColor.error);
+                                        } else if (isAddressListEmpty) {
+                                          customTast(
+                                              "PLEASE_ADD_DELIVERY_ADDRESS".tr,
+                                              AppColor.error);
+                                        } else if (isSelectedAddressNull) {
+                                          customTast(
+                                              "PLEASE_CHOOSE_AN_ADDRESS".tr,
+                                              AppColor.error);
+                                        } else if (isOutOfArea) {
+                                          customTast(
+                                              "Oops! We're currently unavailable in this area.",
+                                              AppColor.error);
+                                        } else {
+                                          // If all checks pass, then proceed to place the order.
+                                          // This is where you might call setState if you need to update the state due to ordering.
+                                          setState(() {
+                                            // Update any necessary state here
+                                          });
+
+                                          placeOrderController.placeOrderPost(
+                                              PlaceOrderBody(
+                                                branchId: homeController
+                                                    .selectedbranchId,
+                                                orderType: cartController
+                                                            .orderTypeIndex ==
                                                         0
                                                     ? 5
                                                     : 10,
-                                            isAdvanceOrder: isAdvanceOrder,
-                                            deliveryCharge:
-                                                cartController.deliveryCharge,
-                                            distance: cartController.kilometer,
-                                            addressId: cartController
-                                                        .orderTypeIndex ==
-                                                    0
-                                                ? addressController
-                                                    .addressDataList[
-                                                        addressController
-                                                            .selectedAddress!]
-                                                    .id
-                                                : null,
-                                            deliveryTime: selectedDate,
-                                            subtotal:
-                                                cartController.totalCartValue,
-                                            total: cartController.total,
-                                            couponId: cartController.couponId,
-                                            discount:
-                                                cartController.couponDiscount,
-                                            source: 10,
-                                            items: cartController.cart,
-                                          ),
-                                          callback);
-                                    }
-                                  });
-                                },
+                                                isAdvanceOrder: isAdvanceOrder,
+                                                deliveryCharge: cartController
+                                                    .deliveryCharge,
+                                                distance:
+                                                    cartController.kilometer,
+                                                addressId: cartController
+                                                            .orderTypeIndex ==
+                                                        0
+                                                    ? addressController
+                                                        .addressDataList[
+                                                            addressController
+                                                                .selectedAddress!]
+                                                        .id
+                                                    : null,
+                                                deliveryTime: '00:00',
+                                                subtotal: cartController
+                                                    .totalCartValue,
+                                                total: cartController.total,
+                                                couponId:
+                                                    cartController.couponId,
+                                                discount: cartController
+                                                    .couponDiscount,
+                                                source: 10,
+                                                items: cartController.cart,
+                                              ),
+                                              callback);
+                                        }
+
+                                        setState(() {
+                                          isOrdering =
+                                              false; // Reset the ordering status
+                                        });
+                                      },
+
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   backgroundColor: AppColor.primaryColor,
@@ -992,10 +1110,18 @@ class _CheckoutViewState extends State<CheckoutView> {
                                     borderRadius: BorderRadius.circular(24.r),
                                   ),
                                 ),
-                                child: Text(
-                                  "PLACE_ORDER".tr,
-                                  style: fontMedium,
-                                ),
+                                child: isOrdering
+                                    ? Text(
+                                        "Please Wait...", // Display "Please Wait..." when ordering
+                                        style:
+                                            fontMedium, // Ensure you define fontMedium appropriately
+                                      )
+                                    : Text(
+                                        "PLACE_ORDER"
+                                            .tr, // Original text to display when not ordering
+                                        style:
+                                            fontMedium, // Ensure you define fontMedium appropriately
+                                      ),
                               ),
                             ],
                           ),
@@ -1361,8 +1487,8 @@ Widget cartSummarySection(context) {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8.r)),
                                     child: CachedNetworkImage(
-                                      imageUrl:cartController
-                                                  .cart[index].itemImage!,
+                                      imageUrl:
+                                          cartController.cart[index].itemImage!,
                                       imageBuilder: (context, imageProvider) =>
                                           Container(
                                         decoration: BoxDecoration(
@@ -1612,10 +1738,7 @@ Widget cartSummarySection(context) {
                     ),
                     if (cartController.orderTypeIndex == 0 &&
                         cartController.orderTypeIndex != 10 &&
-                        cartController.orderTypeIndex != 1 &&
-                        Get.find<AddressController>()
-                            .addressDataList
-                            .isNotEmpty)
+                        cartController.orderTypeIndex != 1)
                       Padding(
                         padding: EdgeInsets.all(8.0.r),
                         child: Row(

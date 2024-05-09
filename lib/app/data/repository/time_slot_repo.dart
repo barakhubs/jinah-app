@@ -1,48 +1,47 @@
 import 'dart:convert';
+import 'package:get/get.dart'; // Ensure you have this import for GetX
+import 'package:jinahfoods/app/modules/home/controllers/home_controller.dart';
+
 import '../../../util/api-list.dart';
 import '../api/server.dart';
 import '../model/response/time_slot_model.dart';
 
 class TimeSlotRepo {
-  static Server server = Server();
-  static TimeSlotModel todayTimeSlotModelData = TimeSlotModel();
-  static TimeSlotModel tomorrowTimeSlotModelData = TimeSlotModel();
+  Server server = Server();
+  HomeController homeController = Get.find<HomeController>();
 
-  static Future<TimeSlotModel?> getTodayTimeSlot() async {
-    try {
-      await server
-          .getRequestWithoutToken(
-        endPoint: APIList.todayTimeSlot,
-      )
-          .then((response) {
-        if (response != null && response.statusCode == 200) {
-          final jsonResponse = json.decode(response.body);
-          todayTimeSlotModelData = TimeSlotModel.fromJson(jsonResponse);
-          return todayTimeSlotModelData;
-        }
-      });
-      return todayTimeSlotModelData;
-    } catch (e) {
-      return null;
-    }
+  TimeSlotRepo() {
+    // Perform any necessary initialization here
   }
 
-  static Future<TimeSlotModel?> getTomorrowTimeSlot() async {
+  Future<TimeSlotModel?> getTodayTimeSlot() async {
+    int? defaultBranch = 4;
     try {
-      await server
-          .getRequestWithoutToken(
-        endPoint: APIList.tomorrowTimeSlot,
-      )
-          .then((response) {
-        if (response != null && response.statusCode == 200) {
-          final jsonResponse = json.decode(response.body);
-          tomorrowTimeSlotModelData = TimeSlotModel.fromJson(jsonResponse);
-          return tomorrowTimeSlotModelData;
-        }
-      });
-      return tomorrowTimeSlotModelData;
+      final response = await server.getRequest(
+        endPoint: "${APIList.todayTimeSlot}${defaultBranch.toString()}",
+      );
+      if (response != null && response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        return TimeSlotModel.fromJson(jsonResponse);
+      }
     } catch (e) {
-      return null;
+      print("Error fetching today's time slot: $e");
     }
+    return null;
+  }
+
+  Future<TimeSlotModel?> getTomorrowTimeSlot() async {
+    try {
+      final response = await server.getRequestWithoutToken(
+        endPoint: "${APIList.tomorrowTimeSlot}",
+      );
+      if (response != null && response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        return TimeSlotModel.fromJson(jsonResponse);
+      }
+    } catch (e) {
+      print("Error fetching tomorrow's time slot: $e");
+    }
+    return null;
   }
 }

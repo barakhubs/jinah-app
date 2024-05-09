@@ -37,8 +37,8 @@ class AddressController extends GetxController {
   String selectedAddressType = "Home";
 
   Position position = Position(
-      longitude: 0.0,
-      latitude: 0.0,
+      longitude: 3.020510,
+      latitude: 30.911334,
       timestamp: DateTime.now(),
       accuracy: 1,
       altitude: 1,
@@ -49,8 +49,8 @@ class AddressController extends GetxController {
       headingAccuracy: 1); // Add this line);
 
   Position pickPosition = Position(
-      longitude: 0.0,
-      latitude: 0.0,
+      longitude: 3.020510,
+      latitude: 30.911334,
       timestamp: DateTime.now(),
       accuracy: 1,
       altitude: 1,
@@ -85,8 +85,8 @@ class AddressController extends GetxController {
       getAddressList();
     }
     currentPosition = Position(
-      latitude: 37.4133095,
-      longitude: -122.1592061,
+      longitude: 3.020510,
+      latitude: 30.911334,
       timestamp: DateTime.now(),
       accuracy: 1,
       altitude: 1,

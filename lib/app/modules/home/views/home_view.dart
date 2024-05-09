@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jinahfoods/app/modules/order/controllers/order_controller.dart';
 import 'package:jinahfoods/app/modules/payment/views/payment_view.dart';
+import 'package:jinahfoods/util/api-list.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../util/constant.dart';
 import '../../../../util/style.dart';
@@ -59,12 +60,13 @@ class _HomeViewState extends State<HomeView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkForAcceptedOrdersAndPromptPayment();
     });
+
   }
 
   void checkForAcceptedOrdersAndPromptPayment() {
     final orderController = Get.find<OrderController>();
-    final acceptedOrderIndex = orderController.ordersData.indexWhere((order) =>
-      order.status == 4 && order.paymentStatus == 10);
+    final acceptedOrderIndex = orderController.ordersData
+        .indexWhere((order) => order.status == 4 && order.paymentStatus == 10);
 
     if (acceptedOrderIndex != -1) {
       // Assuming your order objects have an orderId field
@@ -75,23 +77,39 @@ class _HomeViewState extends State<HomeView> {
 
   void showOrderAcceptedAndPromptPaymentDialog(
       BuildContext context, int? orderId) {
+    // Check if we should show the dialog
+    var lastShown = box.read('lastDialogShownTime');
+    var currentTime = DateTime.now();
+
+    if (lastShown != null) {
+      var lastShownTime = DateTime.parse(lastShown);
+      var difference = currentTime.difference(lastShownTime);
+
+      // If less than 10 minutes have passed, do not show the dialog
+      if (difference.inMinutes < 5) {
+        return;
+      }
+    }
+
     showDialog(
       context: context,
-      barrierDismissible: false, // Make the user respond to the dialog
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Order Accepted!"),
+          title: Text("Order Accepted"),
           content: Text(
-              "Your order has been accepted. Tap 'Pay Now' to proceed with payment.", style: TextStyle(
-                fontSize: 16, // Increase font size for the 'Pay Now' button
+              "Your order has been accepted. Tap on 'Pay Now' to pay before your order is prepared",style: TextStyle(
+                fontSize: 16, 
               ),),
           actions: <Widget>[
             TextButton(
               child: Text("Later", style: TextStyle(
-                fontSize: 16, // Increase font size for the 'Pay Now' button
+                fontSize: 16, 
               ),),
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog without action
+                Navigator.of(context).pop();
+                // Store the current timestamp when clicking "Later"
+                box.write('lastDialogShownTime', currentTime.toIso8601String());
               },
             ),
             TextButton(
@@ -100,15 +118,31 @@ class _HomeViewState extends State<HomeView> {
                 color: Colors.orange, // Text color
               ),),
               onPressed: () {
-                Get.to(() => PaymentView(
-                      orderId: orderId,
-                    ));
+                Get.to(() => PaymentView(orderId: orderId));
               },
             ),
           ],
         );
       },
     );
+  }
+
+  void delayDialog(BuildContext context, int? orderId) {
+    Future.delayed(Duration(minutes: 10), () {
+      // Check if it's appropriate to show the dialog again
+      // For example, check if the user is still in the relevant screen or if the order status has changed
+      // This is a placeholder for whatever condition makes sense in your app
+      if (shouldShowDialogAgain()) {
+        // Show the dialog again if the condition is met
+        showOrderAcceptedAndPromptPaymentDialog(context, orderId);
+      }
+    });
+  }
+
+  bool shouldShowDialogAgain() {
+    // Implement your logic here to determine if the dialog should be shown again
+    // For example, check if the user has not yet proceeded with payment or if they are in a specific part of the app
+    return true; // Placeholder return value
   }
 
 // Method to fetch banner data

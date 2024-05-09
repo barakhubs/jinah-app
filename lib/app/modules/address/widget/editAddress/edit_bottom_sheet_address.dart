@@ -102,7 +102,7 @@ class _EditAddressViewState extends State<EditBottomSheetAddress> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "APPARTMENT_&_FLAT_NO".tr,
+                    "Describe Your Exact Location",
                     style: fontRegular,
                   ),
                   SizedBox(

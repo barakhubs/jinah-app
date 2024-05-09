@@ -366,6 +366,7 @@ class CartController extends GetxController {
           couponLoading = false;
           update();
           final jsonResponse = json.decode(response.body);
+          print(response.body);
           couponCheckModel = CouponCheckModel.fromJson(jsonResponse);
           couponCode = couponCheckModel.data!.code!;
           couponId = couponCheckModel.data!.id!;

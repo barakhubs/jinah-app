@@ -12,6 +12,7 @@ import 'app/routes/app_pages.dart';
 import 'helper/notification_helper.dart';
 import 'translation/language.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -64,6 +65,10 @@ void main() async {
   } else {
     langValue = const Locale('en', null);
   }
+
+  // Check for in-app updates
+  checkForUpdates();
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(360, 800),
@@ -78,4 +83,25 @@ void main() async {
           )),
     ),
   );
+}
+
+void checkForUpdates() async {
+  try {
+    // Check for update availability
+    AppUpdateInfo? updateInfo = await InAppUpdate.checkForUpdate();
+    if (updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+      // Start flexible update
+      InAppUpdate.startFlexibleUpdate().then((_) {
+        InAppUpdate.completeFlexibleUpdate();
+      }).catchError((e) {
+        print(e.toString());
+      });
+      // Alternatively, you can start an immediate update
+      // InAppUpdate.performImmediateUpdate().catchError((e) {
+      //   print(e.toString());
+      // });
+    }
+  } catch (e) {
+    print(e.toString());
+  }
 }

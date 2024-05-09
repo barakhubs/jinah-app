@@ -14,7 +14,7 @@ Future<http.Response> getLocationData(String text) async {
 
   return response;
 }
-
+ 
 Future<http.Response> getLocationDetails(String placeId) async {
   http.Response response;
 

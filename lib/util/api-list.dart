@@ -40,7 +40,7 @@ class APIList {
   static String? addressSave = "${baseUrl!}/api/frontend/address";
   static String? addressDelete = "${baseUrl!}/api/frontend/address/";
   static String? addressUpdate = "${baseUrl!}/api/frontend/address/";
-  static String? todayTimeSlot = "${baseUrl!}/api/frontend/time-slot/today";
+  static String? todayTimeSlot = "${baseUrl!}/api/frontend/time-slot/today/slot/";
   static String? tomorrowTimeSlot =
       "${baseUrl!}/api/frontend/time-slot/tomorrow";
   static String? couponList = "${baseUrl!}/api/frontend/coupon";

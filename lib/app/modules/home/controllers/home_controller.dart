@@ -29,7 +29,6 @@ class HomeController extends GetxController {
   List<BranchData> popularBranchDataList = <BranchData>[];
   List<BranchData> latestBranchDataList = <BranchData>[];
   List<BannerModel> banners = [];
-  
 
   String? selectedBranch;
   int? selectedbranchId;
@@ -75,7 +74,6 @@ class HomeController extends GetxController {
     selectedbranchId = branchDataList[selectedBranchIndex]
         .id!; //new add for issue in place order page
   }
-  
 
   setSelectedBranchIndex(int index) {
     selectedBranchIndex = index;
@@ -84,13 +82,21 @@ class HomeController extends GetxController {
 
   setSelectedBranchId(int id) {
     selectedbranchId = id;
+    var branch = branchDataList.firstWhere((branch) => branch.id == id);
+
+    // Check if a branch was found and set the selectedBranch to the branch's name
+    if (branch != null) {
+      selectedBranch = branch.name;
+    } else {
+      selectedBranch = null; // or set a default value or handle the error
+    }
     update();
   }
 
   int findBranchIndexById(int branchId) {
     return branchDataList.indexWhere((branch) => branch.id == branchId);
   }
-  
+
   getCategoryList() async {
     menuLoader = true;
     update();
@@ -155,7 +161,7 @@ class HomeController extends GetxController {
     var featuredItemData = await FeaturedItemRepo.getFeaturedItem();
     if (featuredItemData != null) {
       featuredItemDataList = featuredItemData.data ?? [];
-      print('Length is: '+ featuredItemDataList.length.toString());
+      print('Length is: ' + featuredItemDataList.length.toString());
       update();
       featuredLoader = false;
       restaurantItemLoader = false;
@@ -215,10 +221,10 @@ class HomeController extends GetxController {
         .then((response) {
       if (response != null && response.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(response.body);
-      banners = jsonData['data']
-          .map<BannerModel>((data) => BannerModel.fromJson(data))
-          .toList();
-      update();
+        banners = jsonData['data']
+            .map<BannerModel>((data) => BannerModel.fromJson(data))
+            .toList();
+        update();
       } else {}
     });
   }
