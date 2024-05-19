@@ -1483,161 +1483,101 @@ Widget multiVariation(context, ItemData itemdetails) {
 Widget bottomSheetItem(ItemData itemDetails, indexNumber, context) {
   return Padding(
     padding: EdgeInsets.only(bottom: 12.h, left: 16.h, right: 16.h),
-    child: Row(
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.only(top: 4.h),
-          child: SizedBox(
-            height: 80.h,
-            width: 80.w,
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8.r)),
-              child: CachedNetworkImage(
-                imageUrl: itemDetails.cover!,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                      // colorFilter:
-                      //     ColorFilter.mode(Colors.red, BlendMode.colorBurn),
+        Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 4.h),
+              child: SizedBox(
+                height: 200.h,
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                  child: CachedNetworkImage(
+                    imageUrl: itemDetails.cover!,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                          // colorFilter:
+                          //     ColorFilter.mode(Colors.red, BlendMode.colorBurn),
+                        ),
+                      ),
                     ),
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      child: Container(height: 130, width: 200, color: Colors.grey),
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[400]!,
+                    ),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
-                placeholder: (context, url) => Shimmer.fromColors(
-                  child: Container(height: 130, width: 200, color: Colors.grey),
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[400]!,
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
-          ),
+            InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColor.primaryColor,
+                ),
+                padding: EdgeInsets.all(3.0),
+                child: Icon(Icons.close, color: Colors.white, size: 18,),
+              ),
+            ),
+          ],
         ),
-        Expanded(
+        SizedBox(height: 8.h), // Add some spacing between the image and text
+        Padding(
+          padding: EdgeInsets.only(left: 8.w),
           child: SizedBox(
             width: 230.w,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: 8.w, top: 4.h, bottom: 4.h),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 210.w,
-                            child: Text(
-                              itemDetails.name!,
-                              style: TextStyle(
-                                fontFamily: 'Rubik',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14.sp,
-                              ),
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          // SizedBox(
-                          //   width: 10.w,
-                          // ),
-                          // InkWell(
-                          //   onTap: () {
-                          //     showBottomSheet(
-                          //       enableDrag: false,
-                          //       context: context,
-                          //       backgroundColor: Colors.transparent,
-                          //       builder: (context) => SingleChildScrollView(
-                          //         child: ItemCaution(
-                          //           itemName: itemDetails.name,
-                          //           itemCaution: itemDetails.caution,
-                          //         ),
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: SizedBox(
-                          //     width: 14.w,
-                          //     height: 14.h,
-                          //     child: SvgPicture.asset(
-                          //       Images.iconDetails,
-                          //       fit: BoxFit.cover,
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: SizedBox(
-                        width: 20.w,
-                        height: 20.h,
-                        child: SvgPicture.asset(
-                          Images.IconClose,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ],
+                Text(
+                  itemDetails.name!,
+                  style: TextStyle(
+                    fontFamily: 'Rubik',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
+                SizedBox(height: 8.h), // Add some spacing between the name and description
                 itemDetails.description!.isNotEmpty
-                    ? Padding(
-                        padding: EdgeInsets.only(left: 8.w, bottom: 8.h),
-                        child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          itemDetails.description.toString(),
-                          style: TextStyle(
-                            fontFamily: 'Rubik',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10.sp,
-                            color: AppColor.gray,
-                          ),
-                          maxLines: 20,
+                    ? Text(
+                        itemDetails.description.toString(),
+                        style: TextStyle(
+                          fontFamily: 'Rubik',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10.sp,
+                          color: AppColor.gray,
                         ),
+                        maxLines: 20,
+                        overflow: TextOverflow.ellipsis,
                       )
-                    : SizedBox(
-                        height: 65.h,
-                      ),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.w),
-                  child: itemDetails.offer!.isNotEmpty
-                      ? Row(
-                          children: [
-                            Text(
-                              itemDetails.currencyPrice!,
-                              style: TextStyle(
-                                  fontFamily: 'Rubik',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 10.sp,
-                                  decoration: TextDecoration.lineThrough,
-                                  color: AppColor.gray),
-                            ),
-                            SizedBox(
-                              width: 4.w,
-                            ),
-                            Text(
-                              itemDetails.offer![0].currencyPrice!,
-                              style: fontMediumPro,
-                            ),
-                          ],
-                        )
-                      : Row(
-                          children: [
-                            Text(
-                              itemDetails.currencyPrice!,
-                              style: fontMediumPro,
-                            ),
-                          ],
-                        ),
+                    : SizedBox(height: 0), // Use SizedBox to hide empty description
+                SizedBox(height: 8.h), // Add some spacing between the description and price
+                Text(
+                  itemDetails.offer != null && itemDetails.offer!.isNotEmpty
+                      ? itemDetails.offer![0].currencyPrice!
+                      : itemDetails.currencyPrice!,
+                  style: fontMediumPro.copyWith(
+                    decoration: itemDetails.offer != null && itemDetails.offer!.isNotEmpty
+                        ? TextDecoration.lineThrough
+                        : null,
+                    color: itemDetails.offer != null && itemDetails.offer!.isNotEmpty
+                        ? AppColor.gray
+                        : null,
+                  ),
                 ),
               ],
             ),
@@ -1647,3 +1587,4 @@ Widget bottomSheetItem(ItemData itemDetails, indexNumber, context) {
     ),
   );
 }
+
